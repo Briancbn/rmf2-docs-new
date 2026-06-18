@@ -1,4 +1,7 @@
+import fs from 'fs/promises'
+import path from 'path'
 import { defineConfig } from 'vitepress'
+import type { DefaultTheme } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import {
   groupIconMdPlugin,
@@ -64,10 +67,23 @@ export default withMermaid(
           },
           { text: 'Config & API References', link: '/references/overview' },
         ],
-        '/references': [
-          { text: 'Overview', link: '/references/overview' },
-          { text: 'VDA5050 Core', link: '/references/vda5050_core' },
-        ],
+        '/references': {
+          base: '/references/',
+          items: [
+            { text: 'Overview', link: 'overview' },
+            {
+              text: 'VDA5050 Core',
+              items: [
+                {
+                  text: 'C++',
+                  collapsed: true,
+                  base: '/references/vda5050_core/',
+                  items: await sidebarReferenceVDA5050(),
+                },
+              ],
+            },
+          ],
+        },
       },
 
       footer: {
@@ -93,3 +109,97 @@ export default withMermaid(
     },
   })
 )
+
+function removeFileExtension(filename) {
+  return filename.substr(0, filename.lastIndexOf('.'))
+}
+
+function generateSidebarTitle(filename) {
+  return filename.replaceAll('-', '::')
+}
+
+async function crawlDirectory(dirPath, callbackFn) {
+  const entries = await fs.readdir(dirPath, { withFileTypes: true })
+
+  for (const entry of entries) {
+    const fullPath = path.join(dirPath, entry.name)
+
+    if (entry.isDirectory()) {
+      // // Recursively crawl subdirectories
+      // await crawlDirectory(fullPath, callbackFn);
+      continue
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      callbackFn(dirPath, entry.name)
+    }
+  }
+}
+
+async function generateSidebarInfo(dirPath) {
+  const sidebarInfo = []
+  await crawlDirectory(dirPath, (dirName, filename) => {
+    const filenameRaw = removeFileExtension(filename)
+    const text = generateSidebarTitle(filenameRaw)
+    const link = filenameRaw
+    sidebarInfo.push({ text, link })
+  })
+  return sidebarInfo
+}
+
+async function sidebarReferenceVDA5050(): Promise<DefaultTheme.SidebarItem[]> {
+  const docsDir = path.resolve(__dirname, '../references')
+  const result = await generateSidebarInfo(`${docsDir}/vda5050_core`)
+  const groupData = {}
+  for (const page of result) {
+    const nameList = page['text'].split('::')
+    const groupIds = nameList.slice(0, 2)
+
+    let textName = nameList.slice(2).join('::')
+    const entry = groupIds.reduce((acc, value, index) => {
+      if (acc[value] === undefined) {
+        acc[value] = {}
+      }
+      return acc[value]
+    }, groupData)
+    if (textName === '') {
+      entry['link'] = page['link']
+      continue
+    }
+
+    if (entry['items'] == undefined) {
+      entry['items'] = []
+    }
+    const item = {
+      link: page['link'],
+      text: textName,
+    }
+    entry['items'].push(item)
+  }
+  const sidebarInfo = {}
+  generateGroupSidebarInfo(groupData, sidebarInfo)
+  console.log(JSON.stringify(sidebarInfo, null, 2))
+  return sidebarInfo['items']
+}
+
+function generateGroupSidebarInfo(groupData, sidebarInfo) {
+  if ('items' in groupData) {
+    sidebarInfo['link'] = groupData['link']
+    sidebarInfo['items'] = groupData['items']
+    sidebarInfo['collapsed'] = true
+    return
+  }
+  for (const [key, value] of Object.entries(groupData)) {
+    if (key === 'link') {
+      sidebarInfo['link'] = value
+      continue
+    }
+    if (sidebarInfo['items'] === undefined) {
+      sidebarInfo['items'] = []
+      sidebarInfo['collapsed'] = true
+    }
+    const sidebarItem = {
+      text: key,
+    }
+    generateGroupSidebarInfo(value, sidebarItem)
+    sidebarInfo['items'].push(sidebarItem)
+  }
+}
