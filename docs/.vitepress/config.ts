@@ -77,7 +77,7 @@ export default withMermaid(
                 {
                   text: 'C++',
                   collapsed: true,
-                  base: '/references/vda5050_core/',
+                  base: '/references/vda5050_core/cpp/',
                   items: await sidebarReferenceVDA5050(),
                 },
               ],
@@ -147,7 +147,7 @@ async function generateSidebarInfo(dirPath) {
 
 async function sidebarReferenceVDA5050(): Promise<DefaultTheme.SidebarItem[]> {
   const docsDir = path.resolve(__dirname, '../references')
-  const result = await generateSidebarInfo(`${docsDir}/vda5050_core`)
+  const result = await generateSidebarInfo(`${docsDir}/vda5050_core/cpp`)
   const groupData = {}
   for (const page of result) {
     const nameList = page['text'].split('::')

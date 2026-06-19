@@ -1,0 +1,15 @@
+[
+  {
+    "name": "vda5050_core",
+    "url": "https://github.com/Briancbn/vda5050_client.git",
+    "type": "git",
+    "version": "feat/bn/add-doxyfile",
+    "docs": [
+      {
+        "type": "doxygen",
+        "xmlPath": "docs/api/xml",
+        "outDir": "./docs/references/vda5050_core/cpp"
+      }
+    ]
+  }
+]
