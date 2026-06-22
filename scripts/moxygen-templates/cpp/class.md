@@ -21,17 +21,6 @@
 
 {{fixLinks briefdescription}}
 
-{{fixLinks detaileddescription}}
-
-{{#each inheritedMemberGroups}}
-### Inherited from {{inheritedName name refid}}
-
-| Kind | Name | Description |
-|------|------|-------------|
-{{#each members}}| `{{kind}}` | {{inheritedName name refid}} {{badgesNoInline}} | {{cell (memberSummary this)}} |
-{{/each}}
-
-{{/each}}
 {{#each (orderedSections filtered.sections)}}
 ### {{#if (eq section "public-func")}}Public Member Functions{{else}}{{label}}{{/if}}
 
@@ -47,6 +36,23 @@
 {{/each}}
 {{/if}}
 
+{{/each}}
+{{#each inheritedMemberGroups}}
+### Inherited from {{inheritedName name refid}}
+
+| Kind | Name | Description |
+|------|------|-------------|
+{{#each members}}| `{{kind}}` | {{inheritedName name refid}} {{badgesNoInline}} | {{cell (memberSummary this)}} |
+{{/each}}
+
+{{/each}}
+{{#if detaileddescription}}
+## Detailed Description
+
+{{fixLinks detaileddescription}}
+
+{{/if}}
+{{#each (orderedSections filtered.sections)}}
 {{#each members}}
 
 ---
