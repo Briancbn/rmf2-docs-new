@@ -248,6 +248,61 @@ Handlebars.registerHelper('orderedSections', (sections) =>
   )
 )
 
+// The per-member detail block, shared by every documentation category below.
+// Registered as a partial so the categories can each render it via {{> memberDetail}}.
+// Precompiled (noEscape, non-strict) so missing fields don't throw.
+Handlebars.registerPartial(
+  'memberDetail',
+  Handlebars.compile(
+    readFileSync(
+      join(
+        import.meta.dirname,
+        'moxygen-templates',
+        'partials',
+        'member-detail.md'
+      ),
+      'utf8'
+    ),
+    { noEscape: true }
+  )
+)
+
+// Split a class's members into the documentation categories doxygen uses. A
+// constructor shares the class's short name; a destructor starts with `~`.
+function shortClassName(fullName: unknown): string {
+  return (String(fullName).split('<')[0].split('::').pop() || '').trim()
+}
+function isConstructorOrDestructor(member: any, className: unknown): boolean {
+  const name = String(member.name ?? '')
+  return name === shortClassName(className) || name.startsWith('~')
+}
+const asArray = (value: unknown): any[] => (Array.isArray(value) ? value : [])
+
+// Categorize members by kind — works for both classes and namespaces.
+Handlebars.registerHelper('typedefMembers', (members) =>
+  asArray(members).filter((m) => m.kind === 'typedef')
+)
+Handlebars.registerHelper('enumMembers', (members) =>
+  asArray(members).filter((m) => m.kind === 'enum')
+)
+// Constructors and destructors.
+Handlebars.registerHelper('constructorMembers', (members, className) =>
+  asArray(members).filter(
+    (m) => FUNCTION_KINDS.has(m.kind) && isConstructorOrDestructor(m, className)
+  )
+)
+// Member functions other than constructors/destructors.
+Handlebars.registerHelper('functionMembers', (members, className) =>
+  asArray(members).filter(
+    (m) =>
+      FUNCTION_KINDS.has(m.kind) && !isConstructorOrDestructor(m, className)
+  )
+)
+// Data members (member variables / attributes).
+Handlebars.registerHelper('dataMembers', (members) =>
+  asArray(members).filter((m) => m.kind === 'variable')
+)
+
 interface DocsConfig {
   type: string
   xmlPath: string
@@ -326,6 +381,16 @@ function sourceUrlBase(url: string, version?: string): string {
   return `${web}/blob/${version || 'HEAD'}`
 }
 
+// A generated page is "empty" when nothing remains after dropping its anchor
+// tag, headings and blank lines — i.e. a bare title with no members, tables or
+// description (e.g. a namespace that only contains sub-namespaces).
+function isContentEmpty(markdown: string): boolean {
+  return markdown.split('\n').every((line) => {
+    const text = line.trim()
+    return !text || /^\{#[^}]*\}$/.test(text) || /^#{1,6}\s/.test(text)
+  })
+}
+
 async function generateApiDocs(
   name: string,
   repoDir: string,
@@ -361,6 +426,17 @@ async function generateApiDocs(
       sourceUrl,
       filters: memberFilters,
     })
+
+    // Remove pages that ended up with no real content (title only).
+    let removed = 0
+    for (const entry of readdirSync(markdownDir)) {
+      const file = join(markdownDir, entry)
+      if (entry.endsWith('.md') && isContentEmpty(readFileSync(file, 'utf8'))) {
+        rmSync(file)
+        removed += 1
+      }
+    }
+    if (removed) console.log(`  removed ${removed} empty page(s)`)
   }
 }
 

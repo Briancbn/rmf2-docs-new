@@ -6,8 +6,6 @@
 {{summary}}
 {{else}}
 {{fixLinks briefdescription}}
-
-{{fixLinks detaileddescription}}
 {{/if}}
 
 {{#with (compoundsOfKind filtered.compounds "namespace") as |namespaces|}}
@@ -43,7 +41,7 @@
 {{/if}}
 {{/with}}
 
-{{#each filtered.sections}}
+{{#each (orderedSections filtered.sections)}}
 ### {{label}}
 
 {{#if (hasReturnColumn section)}}
@@ -58,43 +56,34 @@
 {{/each}}
 {{/if}}
 
-{{#each members}}
-
----
-
-{{cleanAnchor refid name}}
-
-#### {{name}}
-
-{{badgesNoInline}}
-
-```cpp
-{{signatureNoInline}}
-```
-
-{{fixLinks briefdescription}}
+{{/each}}
+{{#if detaileddescription}}
+## Detailed Description
 
 {{fixLinks detaileddescription}}
 
-{{#unless briefdescription}}
-{{#unless detaileddescription}}
-{{memberSummary this}}
-{{/unless}}
-{{/unless}}
-
-{{#if (hasDocumentedParams params)}}
-| Parameter | Type | Description |
-|-----------|------|-------------|
-{{#each (documentedParams params)}}| `{{name}}` | `{{type}}` | {{description}} |
-{{/each}}
 {{/if}}
+{{#each (typedefMembers filtered.members)}}
+{{#if @first}}## Typedef Documentation
 
-{{#if enumvalue}}
-| Value | Description |
-|-------|-------------|
-{{#each enumvalue}}| `{{name}}` | {{summary}} |
-{{/each}}
 {{/if}}
-
+{{> memberDetail}}
 {{/each}}
+{{#each (enumMembers filtered.members)}}
+{{#if @first}}## Enumeration Documentation
+
+{{/if}}
+{{> memberDetail}}
+{{/each}}
+{{#each (functionMembers filtered.members "")}}
+{{#if @first}}## Function Documentation
+
+{{/if}}
+{{> memberDetail}}
+{{/each}}
+{{#each (dataMembers filtered.members)}}
+{{#if @first}}## Variable Documentation
+
+{{/if}}
+{{> memberDetail}}
 {{/each}}

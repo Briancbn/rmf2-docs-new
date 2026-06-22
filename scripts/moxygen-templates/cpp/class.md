@@ -52,76 +52,33 @@
 {{fixLinks detaileddescription}}
 
 {{/if}}
-{{#each (orderedSections filtered.sections)}}
-{{#each members}}
-
----
-
-{{cleanAnchor refid name}}
-
-#### {{name}}
-
-{{badgesNoInline}}
-
-```cpp
-{{signatureNoInline}}
-```
-
-{{#if (sourceLabel)}}{{#if (sourceHref)}}Defined in [{{sourceLabel}}]({{sourceHref}}){{else}}Defined in {{sourceLabel}}{{/if}}
-{{/if}}
-
-{{fixLinks briefdescription}}
-
-{{fixLinks detaileddescription}}
-
-{{#if referencedBy}}
-##### Referenced by
-
-{{#each referencedBy}}- {{inheritedName name refid}}
-{{/each}}
+{{#each (typedefMembers filtered.members)}}
+{{#if @first}}## Member Typedef Documentation
 
 {{/if}}
-{{#if references}}
-##### References
-
-{{#each references}}- {{inheritedName name refid}}
+{{> memberDetail}}
 {{/each}}
+{{#each (enumMembers filtered.members)}}
+{{#if @first}}## Member Enumeration Documentation
 
 {{/if}}
-{{#if reimplements}}
-##### Reimplements
-
-{{#each reimplements}}- {{inheritedName name refid}}
+{{> memberDetail}}
 {{/each}}
+{{#each (constructorMembers filtered.members name)}}
+{{#if @first}}## Constructor & Destructor Documentation
 
 {{/if}}
-{{#if reimplementedBy}}
-##### Reimplemented by
-
-{{#each reimplementedBy}}- {{inheritedName name refid}}
+{{> memberDetail}}
 {{/each}}
+{{#each (functionMembers filtered.members name)}}
+{{#if @first}}## Member Function Documentation
 
 {{/if}}
-
-{{#unless briefdescription}}
-{{#unless detaileddescription}}
-{{memberSummary this}}
-{{/unless}}
-{{/unless}}
-
-{{#if (hasDocumentedParams params)}}
-| Parameter | Type | Description |
-|-----------|------|-------------|
-{{#each (documentedParams params)}}| `{{name}}` | `{{type}}` | {{description}} |
+{{> memberDetail}}
 {{/each}}
+{{#each (dataMembers filtered.members)}}
+{{#if @first}}## Member Data Documentation
+
 {{/if}}
-
-{{#if enumvalue}}
-| Value | Description |
-|-------|-------------|
-{{#each enumvalue}}| `{{name}}` | {{summary}} |
-{{/each}}
-{{/if}}
-
-{{/each}}
+{{> memberDetail}}
 {{/each}}
