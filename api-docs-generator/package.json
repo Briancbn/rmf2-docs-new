@@ -1,0 +1,23 @@
+{
+  "name": "@rmf2-docs/api-docs-generator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "bin": {
+    "api-docs-generator": "./cli.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.9",
+    "moxygen": "^2.1.10"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "typescript": "^5.7.0"
+  }
+}

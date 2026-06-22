@@ -13,6 +13,9 @@ importers:
       '@mermaid-js/mermaid-mindmap':
         specifier: ^9.3.0
         version: 9.3.0
+      '@rmf2-docs/api-docs-generator':
+        specifier: workspace:*
+        version: link:api-docs-generator
       '@types/node':
         specifier: ^25.9.2
         version: 25.9.2
@@ -31,9 +34,6 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
-      handlebars:
-        specifier: ^4.7.9
-        version: 4.7.9
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -43,21 +43,34 @@ importers:
       mermaid:
         specifier: ^11.15.0
         version: 11.15.0
-      moxygen:
-        specifier: ^2.1.10
-        version: 2.1.10
       prettier:
         specifier: ^3.8.4
         version: 3.8.4
       vitepress:
         specifier: 2.0.0-alpha.17
-        version: 2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(yaml@2.9.0)
+        version: 2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(typescript@5.9.3)(yaml@2.9.0)
       vitepress-plugin-group-icons:
         specifier: ^1.7.5
         version: 1.7.5(vite@7.3.5(@types/node@25.9.2)(yaml@2.9.0))
       vitepress-plugin-mermaid:
         specifier: ^2.0.17
-        version: 2.0.17(mermaid@11.15.0)(vitepress@2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(yaml@2.9.0))
+        version: 2.0.17(mermaid@11.15.0)(vitepress@2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(typescript@5.9.3)(yaml@2.9.0))
+
+  api-docs-generator:
+    dependencies:
+      handlebars:
+        specifier: ^4.7.9
+        version: 4.7.9
+      moxygen:
+        specifier: ^2.1.10
+        version: 2.1.10
+    devDependencies:
+      '@types/node':
+        specifier: ^25.9.2
+        version: 25.9.2
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
 
 packages:
   '@antfu/install-pkg@1.1.0':
@@ -2183,6 +2196,14 @@ packages:
       }
     engines: { node: '>=6.10' }
 
+  typescript@5.9.3:
+    resolution:
+      {
+        integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==,
+      }
+    engines: { node: '>=14.17' }
+    hasBin: true
+
   uglify-js@3.19.3:
     resolution:
       {
@@ -2802,11 +2823,11 @@ snapshots:
       d3-selection: 3.0.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
-  '@vitejs/plugin-vue@6.0.7(vite@7.3.5(@types/node@25.9.2)(yaml@2.9.0))(vue@3.5.35)':
+  '@vitejs/plugin-vue@6.0.7(vite@7.3.5(@types/node@25.9.2)(yaml@2.9.0))(vue@3.5.35(typescript@5.9.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
       vite: 7.3.5(@types/node@25.9.2)(yaml@2.9.0)
-      vue: 3.5.35
+      vue: 3.5.35(typescript@5.9.3)
 
   '@vue/compiler-core@3.5.35':
     dependencies:
@@ -2867,34 +2888,34 @@ snapshots:
       '@vue/shared': 3.5.35
       csstype: 3.2.3
 
-  '@vue/server-renderer@3.5.35(vue@3.5.35)':
+  '@vue/server-renderer@3.5.35(vue@3.5.35(typescript@5.9.3))':
     dependencies:
       '@vue/compiler-ssr': 3.5.35
       '@vue/shared': 3.5.35
-      vue: 3.5.35
+      vue: 3.5.35(typescript@5.9.3)
 
   '@vue/shared@3.5.35': {}
 
-  '@vueuse/core@14.3.0(vue@3.5.35)':
+  '@vueuse/core@14.3.0(vue@3.5.35(typescript@5.9.3))':
     dependencies:
       '@types/web-bluetooth': 0.0.21
       '@vueuse/metadata': 14.3.0
-      '@vueuse/shared': 14.3.0(vue@3.5.35)
-      vue: 3.5.35
+      '@vueuse/shared': 14.3.0(vue@3.5.35(typescript@5.9.3))
+      vue: 3.5.35(typescript@5.9.3)
 
-  '@vueuse/integrations@14.3.0(focus-trap@8.2.1)(vue@3.5.35)':
+  '@vueuse/integrations@14.3.0(focus-trap@8.2.1)(vue@3.5.35(typescript@5.9.3))':
     dependencies:
-      '@vueuse/core': 14.3.0(vue@3.5.35)
-      '@vueuse/shared': 14.3.0(vue@3.5.35)
-      vue: 3.5.35
+      '@vueuse/core': 14.3.0(vue@3.5.35(typescript@5.9.3))
+      '@vueuse/shared': 14.3.0(vue@3.5.35(typescript@5.9.3))
+      vue: 3.5.35(typescript@5.9.3)
     optionalDependencies:
       focus-trap: 8.2.1
 
   '@vueuse/metadata@14.3.0': {}
 
-  '@vueuse/shared@14.3.0(vue@3.5.35)':
+  '@vueuse/shared@14.3.0(vue@3.5.35(typescript@5.9.3))':
     dependencies:
-      vue: 3.5.35
+      vue: 3.5.35(typescript@5.9.3)
 
   ansi-escapes@7.3.0:
     dependencies:
@@ -3567,6 +3588,8 @@ snapshots:
 
   ts-dedent@2.2.0: {}
 
+  typescript@5.9.3: {}
+
   uglify-js@3.19.3:
     optional: true
 
@@ -3628,14 +3651,14 @@ snapshots:
     optionalDependencies:
       vite: 7.3.5(@types/node@25.9.2)(yaml@2.9.0)
 
-  vitepress-plugin-mermaid@2.0.17(mermaid@11.15.0)(vitepress@2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(yaml@2.9.0)):
+  vitepress-plugin-mermaid@2.0.17(mermaid@11.15.0)(vitepress@2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(typescript@5.9.3)(yaml@2.9.0)):
     dependencies:
       mermaid: 11.15.0
-      vitepress: 2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(yaml@2.9.0)
+      vitepress: 2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(typescript@5.9.3)(yaml@2.9.0)
     optionalDependencies:
       '@mermaid-js/mermaid-mindmap': 9.3.0
 
-  vitepress@2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(yaml@2.9.0):
+  vitepress@2.0.0-alpha.17(@types/node@25.9.2)(postcss@8.5.15)(typescript@5.9.3)(yaml@2.9.0):
     dependencies:
       '@docsearch/css': 4.6.3
       '@docsearch/js': 4.6.3
@@ -3645,17 +3668,17 @@ snapshots:
       '@shikijs/transformers': 3.23.0
       '@shikijs/types': 3.23.0
       '@types/markdown-it': 14.1.2
-      '@vitejs/plugin-vue': 6.0.7(vite@7.3.5(@types/node@25.9.2)(yaml@2.9.0))(vue@3.5.35)
+      '@vitejs/plugin-vue': 6.0.7(vite@7.3.5(@types/node@25.9.2)(yaml@2.9.0))(vue@3.5.35(typescript@5.9.3))
       '@vue/devtools-api': 8.1.2
       '@vue/shared': 3.5.35
-      '@vueuse/core': 14.3.0(vue@3.5.35)
-      '@vueuse/integrations': 14.3.0(focus-trap@8.2.1)(vue@3.5.35)
+      '@vueuse/core': 14.3.0(vue@3.5.35(typescript@5.9.3))
+      '@vueuse/integrations': 14.3.0(focus-trap@8.2.1)(vue@3.5.35(typescript@5.9.3))
       focus-trap: 8.2.1
       mark.js: 8.11.1
       minisearch: 7.2.0
       shiki: 3.23.0
       vite: 7.3.5(@types/node@25.9.2)(yaml@2.9.0)
-      vue: 3.5.35
+      vue: 3.5.35(typescript@5.9.3)
     optionalDependencies:
       postcss: 8.5.15
     transitivePeerDependencies:
@@ -3683,13 +3706,15 @@ snapshots:
       - universal-cookie
       - yaml
 
-  vue@3.5.35:
+  vue@3.5.35(typescript@5.9.3):
     dependencies:
       '@vue/compiler-dom': 3.5.35
       '@vue/compiler-sfc': 3.5.35
       '@vue/runtime-dom': 3.5.35
-      '@vue/server-renderer': 3.5.35(vue@3.5.35)
+      '@vue/server-renderer': 3.5.35(vue@3.5.35(typescript@5.9.3))
       '@vue/shared': 3.5.35
+    optionalDependencies:
+      typescript: 5.9.3
 
   wordwrap@1.0.0: {}
 
