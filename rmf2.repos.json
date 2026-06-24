@@ -24,5 +24,19 @@
         "outDir": "./docs/references/rmf2_scheduler/cpp"
       }
     ]
+  },
+  {
+    "name": "res_mapf",
+    "url": "https://github.com/ros-industrial/res_mapf.git",
+    "type": "git",
+    "version": "main",
+    "docs": [
+      {
+        "type": "lazydocs",
+        "projectDir": "res_mapf",
+        "srcPaths": ["res_mapf_planning"],
+        "outDir": "./docs/references/res_mapf/python"
+      }
+    ]
   }
 ]

@@ -101,6 +101,23 @@ export default withMermaid(
                 },
               ],
             },
+            {
+              text: 'RES MAPF',
+              items: [
+                {
+                  text: 'Python',
+                  collapsed: true,
+                  base: '/references/res_mapf/python/',
+                  link: 'index.md',
+                  items: await generateSidebar(
+                    path.resolve(__dirname, '../references/res_mapf/python'),
+                    // Full module-tree nesting (Python names have no separator
+                    // inside a segment, unlike C++ template args).
+                    { separator: '.', fromFilename: true, groupDepth: Infinity }
+                  ),
+                },
+              ],
+            },
           ],
         },
       },

@@ -21,8 +21,13 @@ async function pageTitle(filePath: string, filename: string): Promise<string> {
   return removeExtension(filename).replaceAll('-', '::')
 }
 
-// One { text, link } entry per markdown page in `dir` (non-recursive).
-export async function collectPages(dir: string): Promise<SidebarItem[]> {
+// One { text, link } entry per markdown page in `dir` (non-recursive). With
+// `fromFilename`, the title is the filename itself (already a clean dotted module
+// path for lazydocs/Python) rather than the page's H1 heading.
+export async function collectPages(
+  dir: string,
+  fromFilename: boolean = false
+): Promise<SidebarItem[]> {
   const entries = await readdir(dir, { withFileTypes: true })
   const pages = entries.filter(
     (entry) =>
@@ -30,9 +35,12 @@ export async function collectPages(dir: string): Promise<SidebarItem[]> {
   )
 
   return Promise.all(
-    pages.map(async (entry) => ({
-      text: await pageTitle(join(dir, entry.name), entry.name),
-      link: removeExtension(entry.name),
-    }))
+    pages.map(async (entry) => {
+      const link = removeExtension(entry.name)
+      const text = fromFilename
+        ? link
+        : await pageTitle(join(dir, entry.name), entry.name)
+      return { text, link }
+    })
   )
 }

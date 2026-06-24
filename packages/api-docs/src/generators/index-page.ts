@@ -1,11 +1,13 @@
-// Generate a landing `index.md` for a directory of generated API-docs markdown.
-// Generator-agnostic: it reads the produced pages (reusing the sidebar grouping)
-// and renders them as a grouped, linked outline.
+// Generate a landing `index.md` for a set of generated API-docs pages: reads the
+// produced pages (reusing the sidebar grouping) and renders them as a grouped,
+// linked outline. Shared by the doxygen (C++) and lazydocs (Python) generators so
+// both landing pages look the same; `options` selects the language conventions
+// (segment separator, grouping depth, title source).
 
 import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { generateSidebar } from '../sidebar'
-import type { SidebarItem } from '../types'
+import type { SidebarItem, SidebarOptions } from '../sidebar'
 
 // Render grouped items as a nested markdown bullet list.
 function renderItems(items: SidebarItem[], depth: number = 0): string {
@@ -29,9 +31,10 @@ function renderItems(items: SidebarItem[], depth: number = 0): string {
 // namespace. Does nothing if the directory has no pages.
 export async function generateIndex(
   dir: string,
-  title: string = 'API Reference'
+  title: string = 'API Reference',
+  options: SidebarOptions = {}
 ): Promise<void> {
-  const items = await generateSidebar(dir)
+  const items = await generateSidebar(dir, options)
   if (items.length === 0) return
 
   const frontmatter = '---\noutline: [2, 3]\n---\n'

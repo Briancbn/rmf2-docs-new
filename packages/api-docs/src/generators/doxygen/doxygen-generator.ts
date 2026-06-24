@@ -3,6 +3,7 @@ import { mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs'
 import type { ApiDocsGenerator, GenerateContext } from '../../types'
 import { run as runMoxygen, defaultFilters } from 'moxygen'
 import { run, isContentEmpty } from '../../utils'
+import { generateIndex } from '../index-page'
 
 // Bundled custom C++ templates, resolved relative to this module.
 const cppTemplatesDir = join(import.meta.dirname, 'moxygen-templates', 'cpp')
@@ -70,5 +71,8 @@ export const doxygenGenerator: ApiDocsGenerator = {
       }
     }
     if (removed) console.log(`  removed ${removed} empty page(s)`)
+
+    // Landing index for the generated C++ pages.
+    await generateIndex(outDir, name)
   },
 }

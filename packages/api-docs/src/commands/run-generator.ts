@@ -5,7 +5,6 @@
 import { resolve } from 'node:path'
 
 import { GENERATORS } from '../generators'
-import { generateIndex } from '../index-page'
 import type { DocsConfig } from '../types'
 
 // Run a docs entry through its matching generator, then write a landing index
@@ -34,7 +33,4 @@ export async function runGenerator(
     config: docsConfig,
     verbose,
   })
-
-  // Generator-agnostic landing page for the produced markdown.
-  await generateIndex(outDir, name)
 }
