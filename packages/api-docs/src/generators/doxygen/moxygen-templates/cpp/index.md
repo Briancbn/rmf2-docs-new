@@ -15,7 +15,7 @@
 
 {{cleanAnchor refid name}}
 
-#### {{name}}
+### {{name}}
 
 ```cpp
 {{signatureNoInlineRmf2Docs}}

@@ -34,6 +34,7 @@ export async function generateIndex(
   const items = await generateSidebar(dir)
   if (items.length === 0) return
 
-  const content = `# ${title}\n\n${renderItems(items)}\n`
+  const frontmatter = '---\noutline: [2, 3]\n---\n'
+  const content = `${frontmatter}\n# ${title}\n\n${renderItems(items)}\n`
   await writeFile(join(dir, 'index.md'), content)
 }

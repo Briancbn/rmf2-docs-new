@@ -1,3 +1,6 @@
+---
+outline: [2, 3]
+---
 # {{name}} {{cleanAnchor refid name}}
 
 {{fixLinksRmf2Docs briefdescription}}

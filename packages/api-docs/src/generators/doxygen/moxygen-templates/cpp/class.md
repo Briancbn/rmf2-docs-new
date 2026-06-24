@@ -1,3 +1,6 @@
+---
+outline: [2, 3]
+---
 {{cleanAnchor refid name}}
 
 # {{name}}
@@ -23,7 +26,7 @@
 
 {{#each (orderedSectionsRmf2Docs filtered.sections)}}
 
-### {{#if (eq section "public-func")}}Public Member Functions{{else}}{{label}}{{/if}}
+## {{#if (eq section "public-func")}}Public Member Functions{{else}}{{label}}{{/if}}
 
 {{#if (hasReturnColumn section)}}
 | Name | Description |
@@ -39,7 +42,7 @@
 
 {{/each}}
 {{#each inheritedMemberGroups}}
-### Inherited from {{inheritedNameRmf2Docs name refid}}
+## Inherited from {{inheritedNameRmf2Docs name refid}}
 
 | Kind | Name | Description |
 |------|------|-------------|

@@ -2,7 +2,7 @@
 
 {{cleanAnchor refid name}}
 
-#### {{name}}
+### {{name}}
 
 {{badgesNoInlineRmf2Docs}}
 

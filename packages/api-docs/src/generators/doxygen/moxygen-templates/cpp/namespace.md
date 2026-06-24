@@ -1,3 +1,6 @@
+---
+outline: [2, 3]
+---
 {{cleanAnchor refid name}}
 
 # {{name}}
@@ -10,7 +13,7 @@
 
 {{#with (compoundsOfKind filtered.compounds "namespace") as |namespaces|}}
 {{#if namespaces}}
-### Namespaces
+## Namespaces
 
 | Name | Description |
 |------|-------------|
@@ -21,7 +24,7 @@
 
 {{#with (compoundsOfKind filtered.compounds "class" "struct" "interface") as |types|}}
 {{#if types}}
-### Classes
+## Classes
 
 | Name | Description |
 |------|-------------|
@@ -32,7 +35,7 @@
 
 {{#with (compoundsOfKind filtered.compounds "enum") as |enums|}}
 {{#if enums}}
-### Enumerations
+## Enumerations
 
 | Name | Description |
 |------|-------------|
@@ -43,7 +46,7 @@
 
 {{#each (orderedSectionsRmf2Docs filtered.sections)}}
 
-### {{label}}
+## {{label}}
 
 {{#if (hasReturnColumn section)}}
 | Name | Description |
