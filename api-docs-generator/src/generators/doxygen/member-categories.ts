@@ -2,7 +2,7 @@
 // (typedefs, enums, constructors/destructors, functions, data). Categorized by
 // member kind so it works for both classes and namespaces.
 
-import { FUNCTION_KINDS } from './constants.ts'
+import { FUNCTION_KINDS } from './constants'
 
 const asArray = (value: unknown): any[] => (Array.isArray(value) ? value : [])
 

@@ -1,15 +1,8 @@
-// Doxygen (C++) API-docs generator: runs doxygen to produce XML, then moxygen
-// (with the custom templates/handlers) to render markdown.
-
 import { join } from 'node:path'
 import { mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs'
-import { run as runMoxygen, defaultFilters } from 'moxygen'
-import { run, isContentEmpty } from '../../utils.ts'
 import type { ApiDocsGenerator, GenerateContext } from '../../types.ts'
-import { registerCustomTemplateHandlers } from './custom-template-handlers.ts'
-
-// Register the custom Handlebars helpers and partial before any rendering.
-registerCustomTemplateHandlers()
+import { run as runMoxygen, defaultFilters } from 'moxygen'
+import { run, isContentEmpty } from '../../utils'
 
 // Bundled custom C++ templates, resolved relative to this module.
 const cppTemplatesDir = join(import.meta.dirname, 'moxygen-templates', 'cpp')
@@ -29,6 +22,8 @@ interface DoxygenConfig {
   doxyfile?: string
 }
 
+// Doxygen (C++) API-docs generator: runs doxygen to produce XML, then moxygen
+// (with the custom templates/handlers) to render markdown.
 export const doxygenGenerator: ApiDocsGenerator = {
   type: 'doxygen',
 

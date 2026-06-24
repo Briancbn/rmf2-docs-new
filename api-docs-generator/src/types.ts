@@ -32,3 +32,11 @@ export interface ApiDocsGenerator {
   readonly type: string
   generate(context: GenerateContext): Promise<void>
 }
+
+export interface RepoInfo {
+  name: string
+  url: string
+  type: string
+  version?: string
+  docs?: DocsConfig[]
+}

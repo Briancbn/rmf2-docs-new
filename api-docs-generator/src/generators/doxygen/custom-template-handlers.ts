@@ -17,14 +17,14 @@ import {
   formatSignature,
   tableArgs,
   orderSections,
-} from './formatters.ts'
+} from './formatters'
 import {
   typedefMembers,
   enumMembers,
   constructorMembers,
   functionMembers,
   dataMembers,
-} from './member-categories.ts'
+} from './member-categories'
 
 // Render moxygen's built-in `badges` (bound to the current member) with some
 // qualifiers removed. `inline` is always dropped (noise); callers can hide

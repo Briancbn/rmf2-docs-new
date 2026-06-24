@@ -22,6 +22,7 @@
 {{fixLinks briefdescription}}
 
 {{#each (orderedSections filtered.sections)}}
+
 ### {{#if (eq section "public-func")}}Public Member Functions{{else}}{{label}}{{/if}}
 
 {{#if (hasReturnColumn section)}}
@@ -38,15 +39,18 @@
 
 {{/each}}
 {{#each inheritedMemberGroups}}
+
 ### Inherited from {{inheritedName name refid}}
 
-| Kind | Name | Description |
-|------|------|-------------|
-{{#each members}}| `{{kind}}` | {{inheritedName name refid}} {{badgesNoInline}} | {{cell (memberSummary this)}} |
+| Kind              | Name       | Description                                     |
+| ----------------- | ---------- | ----------------------------------------------- | ----------------------------- |
+| {{#each members}} | `{{kind}}` | {{inheritedName name refid}} {{badgesNoInline}} | {{cell (memberSummary this)}} |
+
 {{/each}}
 
 {{/each}}
 {{#if detaileddescription}}
+
 ## Detailed Description
 
 {{fixLinks detaileddescription}}

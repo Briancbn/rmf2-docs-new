@@ -10,7 +10,7 @@ import {
   MARKDOWN_LINK,
   CODE_SPAN_WITH_LINK,
   CODE_FENCE,
-} from './constants.ts'
+} from './constants'
 
 // Strip markdown links down to their text (matches moxygen's stripMarkdownLinks,
 // which isn't part of its public API).

@@ -8,6 +8,7 @@
 {{/if}}
 
 {{#each filtered.sections}}
+
 ## {{label}}
 
 {{#each members}}

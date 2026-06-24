@@ -10,38 +10,45 @@
 
 {{#with (compoundsOfKind filtered.compounds "namespace") as |namespaces|}}
 {{#if namespaces}}
+
 ### Namespaces
 
-| Name | Description |
-|------|-------------|
-{{#each namespaces}}| {{inheritedName name refid}} | {{cell summary}} |
+| Name                 | Description                  |
+| -------------------- | ---------------------------- | ---------------- |
+| {{#each namespaces}} | {{inheritedName name refid}} | {{cell summary}} |
+
 {{/each}}
 {{/if}}
 {{/with}}
 
 {{#with (compoundsOfKind filtered.compounds "class" "struct" "interface") as |types|}}
 {{#if types}}
+
 ### Classes
 
-| Name | Description |
-|------|-------------|
-{{#each types}}| {{inheritedName name refid}} | {{cell summary}} |
+| Name            | Description                  |
+| --------------- | ---------------------------- | ---------------- |
+| {{#each types}} | {{inheritedName name refid}} | {{cell summary}} |
+
 {{/each}}
 {{/if}}
 {{/with}}
 
 {{#with (compoundsOfKind filtered.compounds "enum") as |enums|}}
 {{#if enums}}
+
 ### Enumerations
 
-| Name | Description |
-|------|-------------|
-{{#each enums}}| {{inheritedName name refid}} | {{cell summary}} |
+| Name            | Description                  |
+| --------------- | ---------------------------- | ---------------- |
+| {{#each enums}} | {{inheritedName name refid}} | {{cell summary}} |
+
 {{/each}}
 {{/if}}
 {{/with}}
 
 {{#each (orderedSections filtered.sections)}}
+
 ### {{label}}
 
 {{#if (hasReturnColumn section)}}
@@ -58,6 +65,7 @@
 
 {{/each}}
 {{#if detaileddescription}}
+
 ## Detailed Description
 
 {{fixLinks detaileddescription}}

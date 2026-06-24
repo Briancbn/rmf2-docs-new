@@ -18,6 +18,7 @@
 {{fixLinks detaileddescription}}
 
 {{#if referencedBy}}
+
 ##### Referenced by
 
 {{#each referencedBy}}- {{inheritedName name refid}}
@@ -25,6 +26,7 @@
 
 {{/if}}
 {{#if references}}
+
 ##### References
 
 {{#each references}}- {{inheritedName name refid}}
@@ -32,6 +34,7 @@
 
 {{/if}}
 {{#if reimplements}}
+
 ##### Reimplements
 
 {{#each reimplements}}- {{inheritedName name refid}}
@@ -39,6 +42,7 @@
 
 {{/if}}
 {{#if reimplementedBy}}
+
 ##### Reimplemented by
 
 {{#each reimplementedBy}}- {{inheritedName name refid}}

@@ -1,0 +1,1 @@
+export { generateApiDocs } from './commands'

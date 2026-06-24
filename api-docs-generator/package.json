@@ -4,12 +4,14 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./index.ts"
+    ".": "./dist/index.js"
   },
   "bin": {
-    "api-docs-generator": "./cli.ts"
+    "rmf2-docs": "./dist/bin.js"
   },
   "scripts": {
+    "build": "node scripts/build.js",
+    "prepare": "node scripts/build.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -18,6 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.2",
+    "esbuild": "^0.27.7",
     "typescript": "^5.7.0"
   }
 }

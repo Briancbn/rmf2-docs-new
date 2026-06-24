@@ -2,9 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ESNext"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true,
+    "module": "esnext",
+    "moduleResolution": "Bundler",
     "noEmit": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
@@ -13,5 +12,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["**/*.ts"]
+  "include": ["src"]
 }
