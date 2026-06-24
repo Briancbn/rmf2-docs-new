@@ -14,7 +14,8 @@ function sourceUrlBase(url: string, version?: string): string {
 
 export async function generateApiDocs(
   manifestPath: string,
-  outDir: string
+  outDir: string,
+  forceUpdate: boolean = false
 ): Promise<void> {
   const repos = readManifest(manifestPath)
   mkdirSync(outDir, { recursive: true })
@@ -22,7 +23,7 @@ export async function generateApiDocs(
   // Phase 1: download all repos simultaneously.
   console.log(`Downloading ${repos.length} repo(s) into ${outDir}`)
   const downloads = await Promise.allSettled(
-    repos.map((repo) => downloadRepo(repo, outDir))
+    repos.map((repo) => downloadRepo(repo, outDir, forceUpdate))
   )
 
   let failed = 0

@@ -11,5 +11,18 @@
         "outDir": "./docs/references/vda5050_core/cpp"
       }
     ]
+  },
+  {
+    "name": "rmf2_scheduler",
+    "url": "https://github.com/Briancbn/rmf_scheduler.git",
+    "type": "git",
+    "version": "fix/bn/doxygen-xml",
+    "docs": [
+      {
+        "type": "doxygen",
+        "xmlPath": "docs/api/xml",
+        "outDir": "./docs/references/rmf2_scheduler/cpp"
+      }
+    ]
   }
 ]

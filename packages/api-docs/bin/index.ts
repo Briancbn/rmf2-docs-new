@@ -31,7 +31,7 @@ import { generateApiDocs } from '../src'
 
 // The `generate-api-docs` command: clone every repo, then generate its docs.
 const USAGE =
-  'Usage: rmf2-docs generate-api-docs [--manifest <path>] [-o|--out-dir <path>]'
+  'Usage: rmf2-docs generate-api-docs [--manifest <path>] [-o|--out-dir <path>] [--force-update]'
 
 async function main(): Promise<void> {
   const { values, positionals } = parseArgs({
@@ -39,12 +39,18 @@ async function main(): Promise<void> {
     options: {
       manifest: { type: 'string', default: 'rmf2.repos.json' },
       'out-dir': { type: 'string', short: 'o', default: '.repos' },
+      // Re-fetch and hard-reset repos that are already cloned.
+      'force-update': { type: 'boolean', default: false },
     },
   })
 
   const [command] = positionals
   if (command === 'generate-api-docs') {
-    await generateApiDocs(resolve(values.manifest), resolve(values['out-dir']))
+    await generateApiDocs(
+      resolve(values.manifest),
+      resolve(values['out-dir']),
+      values['force-update']
+    )
     return
   }
 

@@ -87,6 +87,20 @@ export default withMermaid(
                 },
               ],
             },
+            {
+              text: 'RMF2 Scheduler',
+              items: [
+                {
+                  text: 'C++',
+                  collapsed: true,
+                  base: '/references/rmf2_scheduler/cpp/',
+                  link: 'index.md',
+                  items: await generateSidebar(
+                    path.resolve(__dirname, '../references/rmf2_scheduler/cpp')
+                  ),
+                },
+              ],
+            },
           ],
         },
       },
