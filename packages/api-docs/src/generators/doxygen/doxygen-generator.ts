@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 import { mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs'
-import type { ApiDocsGenerator, GenerateContext } from '../../types.ts'
+import type { ApiDocsGenerator, GenerateContext } from '../../types'
 import { run as runMoxygen, defaultFilters } from 'moxygen'
 import { run, isContentEmpty } from '../../utils'
 

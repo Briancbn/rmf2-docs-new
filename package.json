@@ -19,7 +19,7 @@
   "devDependencies": {
     "@braintree/sanitize-url": "^7.1.2",
     "@mermaid-js/mermaid-mindmap": "^9.3.0",
-    "@rmf2-docs/api-docs-generator": "workspace:*",
+    "@rmf2-docs/api-docs": "workspace:*",
     "@types/node": "^25.9.2",
     "cytoscape": "^3.34.0",
     "cytoscape-cose-bilkent": "^4.1.0",

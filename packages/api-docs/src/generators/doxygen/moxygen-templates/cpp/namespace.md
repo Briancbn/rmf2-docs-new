@@ -10,39 +10,33 @@
 
 {{#with (compoundsOfKind filtered.compounds "namespace") as |namespaces|}}
 {{#if namespaces}}
-
 ### Namespaces
 
-| Name                 | Description                          |
-| -------------------- | ------------------------------------ | ---------------- |
-| {{#each namespaces}} | {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
-
+| Name | Description |
+|------|-------------|
+{{#each namespaces}}| {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
 {{/each}}
 {{/if}}
 {{/with}}
 
 {{#with (compoundsOfKind filtered.compounds "class" "struct" "interface") as |types|}}
 {{#if types}}
-
 ### Classes
 
-| Name            | Description                          |
-| --------------- | ------------------------------------ | ---------------- |
-| {{#each types}} | {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
-
+| Name | Description |
+|------|-------------|
+{{#each types}}| {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
 {{/each}}
 {{/if}}
 {{/with}}
 
 {{#with (compoundsOfKind filtered.compounds "enum") as |enums|}}
 {{#if enums}}
-
 ### Enumerations
 
-| Name            | Description                          |
-| --------------- | ------------------------------------ | ---------------- |
-| {{#each enums}} | {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
-
+| Name | Description |
+|------|-------------|
+{{#each enums}}| {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
 {{/each}}
 {{/if}}
 {{/with}}

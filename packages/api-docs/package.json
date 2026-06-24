@@ -1,5 +1,5 @@
 {
-  "name": "@rmf2-docs/api-docs-generator",
+  "name": "@rmf2-docs/api-docs",
   "version": "1.0.0",
   "private": true,
   "type": "module",

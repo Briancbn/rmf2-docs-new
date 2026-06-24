@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// CLI for @rmf2-docs/api-docs-generator.
+// CLI for @rmf2-docs/api-docs.
 //
 // Clones the repos listed in a JSON manifest, then hands each entry's `docs`
 // targets to a pluggable generator — doxygen for C++ today, with Python/Rust to
@@ -21,7 +21,7 @@
 // docs fields are generator-specific.
 //
 // Run from the repo root (manifest paths resolve against cwd):
-//   npx @rmf2-docs/api-docs-generator generate-api-docs [options]
+//   npx @rmf2-docs/api-docs generate-api-docs [options]
 //     --manifest <path>      path to the repos manifest (default: rmf2.repos.json)
 //     -o, --out-dir <path>   directory to clone into     (default: .repos)
 

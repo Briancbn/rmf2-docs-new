@@ -12,7 +12,7 @@ import Handlebars from 'handlebars'
 import type { Member } from 'moxygen'
 import {
   includePath,
-  fixDescriptionLinks,
+  fixDescription,
   linkName,
   formatSignature,
   tableArgs,
@@ -49,7 +49,7 @@ export function registerCustomTemplateHandlers(
   // SafeString keeps the markdown from being HTML-escaped on the way out.
   Handlebars.registerHelper(
     `fixLinks${suffix}`,
-    (text) => new Handlebars.SafeString(fixDescriptionLinks(String(text ?? '')))
+    (text) => new Handlebars.SafeString(fixDescription(String(text ?? '')))
   )
 
   Handlebars.registerHelper(`inheritedName${suffix}`, (name, refid) =>

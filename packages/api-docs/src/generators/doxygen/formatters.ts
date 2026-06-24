@@ -8,7 +8,8 @@ import {
   TYPE_SECTIONS,
   MAX_TABLE_ARGS,
   MARKDOWN_LINK,
-  CODE_SPAN_WITH_LINK,
+  INLINE_CODE,
+  TAG_LIKE_ANGLE,
   CODE_FENCE,
 } from './constants'
 
@@ -45,15 +46,31 @@ function rewriteCodeSpan(spanContents: string): string {
     .join('')
 }
 
-// When a doxygen comment references a symbol inside inline-code (e.g. `Foo`),
-// moxygen emits the link *inside* the backticks — `[Foo](url)` — and markdown
-// then renders that as literal text instead of a link. Move the link back out
-// of the code span so it stays clickable (skipping fenced code), the same way
-// moxygen's own (internal) `inline()` helper does:
+// Process one prose line: split it into inline-code spans and plain text. Code
+// spans keep their contents (only repairing code-wrapped links, see below);
+// plain text has tag-like `<` escaped so VitePress doesn't read it as an
+// element. Two cases the code-span repair handles, mirroring moxygen's own
+// (internal) `inline()` helper:
 //
 //   `[Foo](url)`        ->  [`Foo`](url)
 //   `get<[Bar](url)>()` ->  `get<`[`Bar`](url)`>()`
-export function fixDescriptionLinks(markdown: string): string {
+function fixProseLine(line: string): string {
+  return line
+    .split(INLINE_CODE)
+    .map((part) => {
+      const isCode =
+        part.length >= 2 && part.startsWith('`') && part.endsWith('`')
+      if (!isCode) return part.replace(TAG_LIKE_ANGLE, '&lt;')
+
+      const contents = part.slice(1, -1)
+      return contents.includes('](') ? rewriteCodeSpan(contents) : part
+    })
+    .join('')
+}
+
+// Clean up a rendered description: repair code-wrapped links and escape tag-like
+// angle brackets, skipping fenced code blocks (where both are valid as-is).
+export function fixDescription(markdown: string): string {
   let insideCodeFence = false
 
   const lines = markdown.split('\n').map((line) => {
@@ -61,11 +78,7 @@ export function fixDescriptionLinks(markdown: string): string {
       insideCodeFence = !insideCodeFence
       return line
     }
-    if (insideCodeFence) return line
-
-    return line.replace(CODE_SPAN_WITH_LINK, (_match, spanContents) =>
-      rewriteCodeSpan(spanContents)
-    )
+    return insideCodeFence ? line : fixProseLine(line)
   })
 
   return lines.join('\n')

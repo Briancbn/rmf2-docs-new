@@ -2,4 +2,5 @@
 
 ## API References By Modules
 
-- [vda5050_core](./vda5050_core.md)
+- vda5050_core
+  - [C++](./vda5050_core/cpp/index.md)

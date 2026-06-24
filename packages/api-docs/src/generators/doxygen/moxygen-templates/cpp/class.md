@@ -39,13 +39,11 @@
 
 {{/each}}
 {{#each inheritedMemberGroups}}
-
 ### Inherited from {{inheritedNameRmf2Docs name refid}}
 
-| Kind              | Name       | Description                                                     |
-| ----------------- | ---------- | --------------------------------------------------------------- | ----------------------------- |
-| {{#each members}} | `{{kind}}` | {{inheritedNameRmf2Docs name refid}} {{badgesNoInlineRmf2Docs}} | {{cell (memberSummary this)}} |
-
+| Kind | Name | Description |
+|------|------|-------------|
+{{#each members}}| `{{kind}}` | {{inheritedNameRmf2Docs name refid}} {{badgesNoInlineRmf2Docs}} | {{cell (memberSummary this)}} |
 {{/each}}
 
 {{/each}}

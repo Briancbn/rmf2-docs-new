@@ -5,10 +5,11 @@
 import { resolve } from 'node:path'
 
 import { GENERATORS } from '../generators'
-import type { ApiDocsGenerator, DocsConfig } from '../types'
+import { generateIndex } from '../index-page'
+import type { DocsConfig } from '../types'
 
-// Run every docs entry for a repo through its matching generator. Unknown types
-// are skipped with a warning.
+// Run a docs entry through its matching generator, then write a landing index
+// for its output. Unknown types are skipped with a warning.
 export async function runGenerator(
   name: string,
   repoDir: string,
@@ -23,11 +24,15 @@ export async function runGenerator(
     return
   }
 
+  const outDir = resolve(docsConfig.outDir)
   await generator.generate({
     name,
     repoDir,
-    outDir: resolve(docsConfig.outDir),
+    outDir,
     sourceUrl,
     config: docsConfig,
   })
+
+  // Generator-agnostic landing page for the produced markdown.
+  await generateIndex(outDir, name)
 }

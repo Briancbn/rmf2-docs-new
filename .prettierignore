@@ -1,2 +1,2 @@
 # Handlebars templates for moxygen — whitespace is significant, do not reformat
-api-docs-generator/generators/doxygen/moxygen-templates/
+packages/api-docs/src/generators/doxygen/moxygen-templates/

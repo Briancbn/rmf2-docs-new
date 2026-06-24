@@ -5,12 +5,10 @@
 {{fixLinksRmf2Docs detaileddescription}}
 
 {{#if filtered.members}}
-
 ## Contents
 
-| Section                    |
-| -------------------------- | ------------------------------------- |
-| {{#each filtered.members}} | [`{{name}}`](#{{cleanId refid name}}) |
-
+| Section |
+|---------|
+{{#each filtered.members}}| [`{{name}}`](#{{cleanId refid name}}) |
 {{/each}}
 {{/if}}
