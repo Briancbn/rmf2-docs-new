@@ -14,7 +14,8 @@ export async function runGenerator(
   name: string,
   repoDir: string,
   docsConfig: DocsConfig,
-  sourceUrl: string
+  sourceUrl: string,
+  verbose: boolean = false
 ): Promise<void> {
   const generator = GENERATORS.get(docsConfig.type)
   if (!generator) {
@@ -31,6 +32,7 @@ export async function runGenerator(
     outDir,
     sourceUrl,
     config: docsConfig,
+    verbose,
   })
 
   // Generator-agnostic landing page for the produced markdown.

@@ -33,6 +33,7 @@ export const doxygenGenerator: ApiDocsGenerator = {
     outDir,
     sourceUrl,
     config,
+    verbose,
   }: GenerateContext): Promise<void> {
     const doc = config as unknown as DoxygenConfig
     const xmlDir = join(repoDir, doc.xmlPath)
@@ -46,7 +47,7 @@ export const doxygenGenerator: ApiDocsGenerator = {
     }
 
     console.log(`\n⚙ doxygen: ${name}`)
-    await run('doxygen', [doc.doxyfile ?? 'Doxyfile'], repoDir)
+    await run('doxygen', [doc.doxyfile ?? 'Doxyfile'], repoDir, !verbose)
 
     console.log(`\n⚙ moxygen: ${name} -> ${outDir}`)
     await runMoxygen({
@@ -56,6 +57,7 @@ export const doxygenGenerator: ApiDocsGenerator = {
       templates: cppTemplatesDir,
       sourceUrl,
       filters: memberFilters,
+      quiet: !verbose,
     })
 
     // Remove pages that ended up with no real content (title only).

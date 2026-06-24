@@ -15,7 +15,8 @@ function sourceUrlBase(url: string, version?: string): string {
 export async function generateApiDocs(
   manifestPath: string,
   outDir: string,
-  forceUpdate: boolean = false
+  forceUpdate: boolean = false,
+  verbose: boolean = false
 ): Promise<void> {
   const repos = readManifest(manifestPath)
   mkdirSync(outDir, { recursive: true })
@@ -48,7 +49,8 @@ export async function generateApiDocs(
           repo.name,
           join(outDir, repo.name),
           docsConfig,
-          sourceUrlBase(repo.url, repo.version)
+          sourceUrlBase(repo.url, repo.version),
+          verbose
         )
       } catch (err) {
         failed += 1

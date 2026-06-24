@@ -12,4 +12,6 @@ export interface GenerateContext {
   sourceUrl: string
   // The docs entry being generated.
   config: DocsConfig
+  // Show underlying tool output (doxygen/moxygen) instead of suppressing it.
+  verbose: boolean
 }
