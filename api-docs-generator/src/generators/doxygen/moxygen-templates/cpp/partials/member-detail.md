@@ -4,24 +4,24 @@
 
 #### {{name}}
 
-{{badgesNoInline}}
+{{badgesNoInlineRmf2Docs}}
 
 ```cpp
-{{signatureNoInline}}
+{{signatureNoInlineRmf2Docs}}
 ```
 
 {{#if (sourceLabel)}}{{#if (sourceHref)}}Defined in [{{sourceLabel}}]({{sourceHref}}){{else}}Defined in {{sourceLabel}}{{/if}}
 {{/if}}
 
-{{fixLinks briefdescription}}
+{{fixLinksRmf2Docs briefdescription}}
 
-{{fixLinks detaileddescription}}
+{{fixLinksRmf2Docs detaileddescription}}
 
 {{#if referencedBy}}
 
 ##### Referenced by
 
-{{#each referencedBy}}- {{inheritedName name refid}}
+{{#each referencedBy}}- {{inheritedNameRmf2Docs name refid}}
 {{/each}}
 
 {{/if}}
@@ -29,7 +29,7 @@
 
 ##### References
 
-{{#each references}}- {{inheritedName name refid}}
+{{#each references}}- {{inheritedNameRmf2Docs name refid}}
 {{/each}}
 
 {{/if}}
@@ -37,7 +37,7 @@
 
 ##### Reimplements
 
-{{#each reimplements}}- {{inheritedName name refid}}
+{{#each reimplements}}- {{inheritedNameRmf2Docs name refid}}
 {{/each}}
 
 {{/if}}
@@ -45,7 +45,7 @@
 
 ##### Reimplemented by
 
-{{#each reimplementedBy}}- {{inheritedName name refid}}
+{{#each reimplementedBy}}- {{inheritedNameRmf2Docs name refid}}
 {{/each}}
 
 {{/if}}

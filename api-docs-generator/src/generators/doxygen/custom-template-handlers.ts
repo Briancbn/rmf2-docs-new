@@ -36,60 +36,73 @@ function filterBadges(member: unknown, hidden: Set<string>): string {
     .join(' ')
 }
 
-export function registerCustomTemplateHandlers(): void {
-  Handlebars.registerHelper('incPath', (location, fallback) =>
+// `suffix` namespaces the helper/partial names away from moxygen's built-ins.
+// The bundled templates reference the default ("Rmf2Docs"); pass a different
+// value only with matching custom templates.
+export function registerCustomTemplateHandlers(
+  suffix: string = 'Rmf2Docs'
+): void {
+  Handlebars.registerHelper(`incPath${suffix}`, (location, fallback) =>
     includePath(location, fallback)
   )
 
   // SafeString keeps the markdown from being HTML-escaped on the way out.
   Handlebars.registerHelper(
-    'fixLinks',
+    `fixLinks${suffix}`,
     (text) => new Handlebars.SafeString(fixDescriptionLinks(String(text ?? '')))
   )
 
-  Handlebars.registerHelper('inheritedName', (name, refid) =>
+  Handlebars.registerHelper(`inheritedName${suffix}`, (name, refid) =>
     linkName(name, refid)
   )
 
   // Name-only places (no signature): keep `const` etc., drop `inline`.
-  Handlebars.registerHelper('badgesNoInline', function (this: Member) {
+  Handlebars.registerHelper(`badgesNoInline${suffix}`, function (this: Member) {
     return filterBadges(this, new Set(['`inline`']))
   })
 
   // Places that already render the full signature: also drop `const` to avoid
   // showing it twice.
-  Handlebars.registerHelper('signatureBadges', function (this: Member) {
-    return filterBadges(this, new Set(['`inline`', '`const`']))
-  })
+  Handlebars.registerHelper(
+    `signatureBadges${suffix}`,
+    function (this: Member) {
+      return filterBadges(this, new Set(['`inline`', '`const`']))
+    }
+  )
 
-  Handlebars.registerHelper('signatureNoInline', function (this: Member) {
-    return formatSignature(this, () =>
-      String(Handlebars.helpers.signature.call(this))
-    )
-  })
+  Handlebars.registerHelper(
+    `signatureNoInline${suffix}`,
+    function (this: Member) {
+      return formatSignature(this, () =>
+        String(Handlebars.helpers.signature.call(this))
+      )
+    }
+  )
 
-  Handlebars.registerHelper('tableArgs', (argsstring) => tableArgs(argsstring))
+  Handlebars.registerHelper(`tableArgs${suffix}`, (argsstring) =>
+    tableArgs(argsstring)
+  )
 
-  Handlebars.registerHelper('orderedSections', (sections) =>
+  Handlebars.registerHelper(`orderedSections${suffix}`, (sections) =>
     orderSections(sections)
   )
 
-  Handlebars.registerHelper('typedefMembers', (m) => typedefMembers(m))
-  Handlebars.registerHelper('enumMembers', (m) => enumMembers(m))
-  Handlebars.registerHelper('constructorMembers', (m, className) =>
+  Handlebars.registerHelper(`typedefMembers${suffix}`, (m) => typedefMembers(m))
+  Handlebars.registerHelper(`enumMembers${suffix}`, (m) => enumMembers(m))
+  Handlebars.registerHelper(`constructorMembers${suffix}`, (m, className) =>
     constructorMembers(m, className)
   )
-  Handlebars.registerHelper('functionMembers', (m, className) =>
+  Handlebars.registerHelper(`functionMembers${suffix}`, (m, className) =>
     functionMembers(m, className)
   )
-  Handlebars.registerHelper('dataMembers', (m) => dataMembers(m))
+  Handlebars.registerHelper(`dataMembers${suffix}`, (m) => dataMembers(m))
 
   // The per-member detail block, shared by every documentation category.
   // Registered as a partial so the categories can each render it via
-  // {{> memberDetail}}. Precompiled (noEscape, non-strict) so missing fields
+  // {{> memberDetailRmf2Docs}}. Precompiled (noEscape, non-strict) so missing fields
   // don't throw.
   Handlebars.registerPartial(
-    'memberDetail',
+    `memberDetail${suffix}`,
     Handlebars.compile(
       readFileSync(
         join(

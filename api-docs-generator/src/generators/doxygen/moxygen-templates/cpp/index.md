@@ -18,10 +18,10 @@
 #### {{name}}
 
 ```cpp
-{{signatureNoInline}}
+{{signatureNoInlineRmf2Docs}}
 ```
 
-{{fixLinks briefdescription}}
+{{fixLinksRmf2Docs briefdescription}}
 
 {{#if enumvalue}}
 | Value | Description |
@@ -30,7 +30,7 @@
 {{/each}}
 {{/if}}
 
-{{fixLinks detaileddescription}}
+{{fixLinksRmf2Docs detaileddescription}}
 
 {{/each}}
 {{/each}}

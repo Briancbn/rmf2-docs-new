@@ -5,7 +5,7 @@
 {{#if (eq kind "group")}}
 {{summary}}
 {{else}}
-{{fixLinks briefdescription}}
+{{fixLinksRmf2Docs briefdescription}}
 {{/if}}
 
 {{#with (compoundsOfKind filtered.compounds "namespace") as |namespaces|}}
@@ -13,9 +13,9 @@
 
 ### Namespaces
 
-| Name                 | Description                  |
-| -------------------- | ---------------------------- | ---------------- |
-| {{#each namespaces}} | {{inheritedName name refid}} | {{cell summary}} |
+| Name                 | Description                          |
+| -------------------- | ------------------------------------ | ---------------- |
+| {{#each namespaces}} | {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
 
 {{/each}}
 {{/if}}
@@ -26,9 +26,9 @@
 
 ### Classes
 
-| Name            | Description                  |
-| --------------- | ---------------------------- | ---------------- |
-| {{#each types}} | {{inheritedName name refid}} | {{cell summary}} |
+| Name            | Description                          |
+| --------------- | ------------------------------------ | ---------------- |
+| {{#each types}} | {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
 
 {{/each}}
 {{/if}}
@@ -39,27 +39,27 @@
 
 ### Enumerations
 
-| Name            | Description                  |
-| --------------- | ---------------------------- | ---------------- |
-| {{#each enums}} | {{inheritedName name refid}} | {{cell summary}} |
+| Name            | Description                          |
+| --------------- | ------------------------------------ | ---------------- |
+| {{#each enums}} | {{inheritedNameRmf2Docs name refid}} | {{cell summary}} |
 
 {{/each}}
 {{/if}}
 {{/with}}
 
-{{#each (orderedSections filtered.sections)}}
+{{#each (orderedSectionsRmf2Docs filtered.sections)}}
 
 ### {{label}}
 
 {{#if (hasReturnColumn section)}}
 | Name | Description |
 |------|-------------|
-{{#each members}}| {{#if (returnTypeShort)}}{{returnTypeShort}} {{/if}}[`{{name}}{{#if argsstring}} {{tableArgs argsstring}}{{/if}}`](#{{cleanId refid name}}) {{signatureBadges}} | {{cell (memberSummary this)}} |
+{{#each members}}| {{#if (returnTypeShort)}}{{returnTypeShort}} {{/if}}[`{{name}}{{#if argsstring}} {{tableArgsRmf2Docs argsstring}}{{/if}}`](#{{cleanId refid name}}) {{signatureBadgesRmf2Docs}} | {{cell (memberSummary this)}} |
 {{/each}}
 {{else}}
 | Name | Description |
 |------|-------------|
-{{#each members}}| [`{{name}}{{#if argsstring}} {{argsstring}}{{/if}}`](#{{cleanId refid name}}) {{badgesNoInline}} | {{cell (memberSummary this)}} |
+{{#each members}}| [`{{name}}{{#if argsstring}} {{argsstring}}{{/if}}`](#{{cleanId refid name}}) {{badgesNoInlineRmf2Docs}} | {{cell (memberSummary this)}} |
 {{/each}}
 {{/if}}
 
@@ -68,30 +68,30 @@
 
 ## Detailed Description
 
-{{fixLinks detaileddescription}}
+{{fixLinksRmf2Docs detaileddescription}}
 
 {{/if}}
-{{#each (typedefMembers filtered.members)}}
+{{#each (typedefMembersRmf2Docs filtered.members)}}
 {{#if @first}}## Typedef Documentation
 
 {{/if}}
-{{> memberDetail}}
+{{> memberDetailRmf2Docs}}
 {{/each}}
-{{#each (enumMembers filtered.members)}}
+{{#each (enumMembersRmf2Docs filtered.members)}}
 {{#if @first}}## Enumeration Documentation
 
 {{/if}}
-{{> memberDetail}}
+{{> memberDetailRmf2Docs}}
 {{/each}}
-{{#each (functionMembers filtered.members "")}}
+{{#each (functionMembersRmf2Docs filtered.members "")}}
 {{#if @first}}## Function Documentation
 
 {{/if}}
-{{> memberDetail}}
+{{> memberDetailRmf2Docs}}
 {{/each}}
-{{#each (dataMembers filtered.members)}}
+{{#each (dataMembersRmf2Docs filtered.members)}}
 {{#if @first}}## Variable Documentation
 
 {{/if}}
-{{> memberDetail}}
+{{> memberDetailRmf2Docs}}
 {{/each}}

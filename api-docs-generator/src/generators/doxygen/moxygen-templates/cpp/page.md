@@ -1,8 +1,8 @@
 # {{name}} {{cleanAnchor refid name}}
 
-{{fixLinks briefdescription}}
+{{fixLinksRmf2Docs briefdescription}}
 
-{{fixLinks detaileddescription}}
+{{fixLinksRmf2Docs detaileddescription}}
 
 {{#if filtered.members}}
 
