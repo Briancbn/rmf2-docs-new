@@ -33,8 +33,8 @@ jobs:
 
       - name: Install Doxygen
         run: |
-          apt-get update
-          apt-get install -y doxygen graphviz
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
 
 
       - name: Install dependencies
