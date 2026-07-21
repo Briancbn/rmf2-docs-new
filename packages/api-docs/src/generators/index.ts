@@ -1,5 +1,5 @@
 import { doxygenGenerator } from './doxygen'
-import { lazydocsGenerator } from './lazydocs'
+import { griffeGenerator } from './griffe'
 import type { ApiDocsGenerator, DocsConfig } from '../types'
 
 export const GENERATORS = new Map<string, ApiDocsGenerator>()
@@ -11,4 +11,4 @@ export function registerGenerator(generator: ApiDocsGenerator): void {
 
 // Built-in generators.
 registerGenerator(doxygenGenerator)
-registerGenerator(lazydocsGenerator)
+registerGenerator(griffeGenerator)

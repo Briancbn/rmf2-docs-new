@@ -1,6 +1,6 @@
 // Generate a landing `index.md` for a set of generated API-docs pages: reads the
 // produced pages (reusing the sidebar grouping) and renders them as a grouped,
-// linked outline. Shared by the doxygen (C++) and lazydocs (Python) generators so
+// linked outline. Shared by the doxygen (C++) and griffe (Python) generators so
 // both landing pages look the same; `options` selects the language conventions
 // (segment separator, grouping depth, title source).
 

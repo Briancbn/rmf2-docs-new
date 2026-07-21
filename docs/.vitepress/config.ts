@@ -112,8 +112,15 @@ export default withMermaid(
                   items: await generateSidebar(
                     path.resolve(__dirname, '../references/res_mapf/python'),
                     // Full module-tree nesting (Python names have no separator
-                    // inside a segment, unlike C++ template args).
-                    { separator: '.', fromFilename: true, groupDepth: Infinity }
+                    // inside a segment, unlike C++ template args), bounded by
+                    // the levels left after the "RES MAPF" > "Python" wrappers
+                    // — the theme silently drops anything deeper.
+                    {
+                      separator: '.',
+                      fromFilename: true,
+                      groupDepth: Infinity,
+                      maxDepth: 4,
+                    }
                   ),
                 },
               ],

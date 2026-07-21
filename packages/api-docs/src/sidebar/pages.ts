@@ -23,7 +23,7 @@ async function pageTitle(filePath: string, filename: string): Promise<string> {
 
 // One { text, link } entry per markdown page in `dir` (non-recursive). With
 // `fromFilename`, the title is the filename itself (already a clean dotted module
-// path for lazydocs/Python) rather than the page's H1 heading.
+// path for griffe/Python) rather than the page's H1 heading.
 export async function collectPages(
   dir: string,
   fromFilename: boolean = false

@@ -32,7 +32,7 @@
     "version": "main",
     "docs": [
       {
-        "type": "lazydocs",
+        "type": "griffe",
         "projectDir": "res_mapf",
         "srcPaths": [
           "res_mapf_planning",
