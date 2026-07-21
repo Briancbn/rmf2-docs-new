@@ -43,5 +43,18 @@
         "outDir": "./docs/references/res_mapf/python"
       }
     ]
+  },
+  {
+    "name": "rmf2_task_orchestrator",
+    "url": "https://github.com/ros-industrial/rmf2_task_orchestrator.git",
+    "type": "git",
+    "version": "main",
+    "docs": [
+      {
+        "type": "rustdoc",
+        "crateName": "rmf2_task_orchestrator",
+        "outDir": "./docs/references/rmf2_task_orchestrator/rust"
+      }
+    ]
   }
 ]

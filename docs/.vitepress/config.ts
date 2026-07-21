@@ -88,20 +88,6 @@ export default withMermaid(
               ],
             },
             {
-              text: 'RMF2 Scheduler',
-              items: [
-                {
-                  text: 'C++',
-                  collapsed: true,
-                  base: '/references/rmf2_scheduler/cpp/',
-                  link: 'index.md',
-                  items: await generateSidebar(
-                    path.resolve(__dirname, '../references/rmf2_scheduler/cpp')
-                  ),
-                },
-              ],
-            },
-            {
               text: 'RES MAPF',
               items: [
                 {
@@ -121,6 +107,41 @@ export default withMermaid(
                       groupDepth: Infinity,
                       maxDepth: 4,
                     }
+                  ),
+                },
+              ],
+            },
+            {
+              text: 'Task Orchestrator',
+              items: [
+                {
+                  text: 'Rust',
+                  collapsed: true,
+                  base: '/references/rmf2_task_orchestrator/rust/',
+                  link: 'index.md',
+                  items: await generateSidebar(
+                    path.resolve(
+                      __dirname,
+                      '../references/rmf2_task_orchestrator/rust'
+                    ),
+                    // Rust paths use `::` like C++, so the default grouping
+                    // applies; bounded by the levels left after the
+                    // "Task Orchestrator" > "Rust" wrappers.
+                    { maxDepth: 4 }
+                  ),
+                },
+              ],
+            },
+            {
+              text: 'Scheduler',
+              items: [
+                {
+                  text: 'C++',
+                  collapsed: true,
+                  base: '/references/rmf2_scheduler/cpp/',
+                  link: 'index.md',
+                  items: await generateSidebar(
+                    path.resolve(__dirname, '../references/rmf2_scheduler/cpp')
                   ),
                 },
               ],

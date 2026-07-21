@@ -1,5 +1,6 @@
 import { doxygenGenerator } from './doxygen'
 import { griffeGenerator } from './griffe'
+import { rustdocGenerator } from './rustdoc'
 import type { ApiDocsGenerator, DocsConfig } from '../types'
 
 export const GENERATORS = new Map<string, ApiDocsGenerator>()
@@ -12,3 +13,4 @@ export function registerGenerator(generator: ApiDocsGenerator): void {
 // Built-in generators.
 registerGenerator(doxygenGenerator)
 registerGenerator(griffeGenerator)
+registerGenerator(rustdocGenerator)
