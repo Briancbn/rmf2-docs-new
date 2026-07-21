@@ -1,0 +1,26 @@
+{
+  "name": "@rmf2-docs/api-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "bin": {
+    "rmf2-docs": "./dist/bin.js"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "prepare": "node scripts/build.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.9",
+    "moxygen": "^2.1.10"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "esbuild": "^0.27.7",
+    "typescript": "^5.7.0"
+  }
+}

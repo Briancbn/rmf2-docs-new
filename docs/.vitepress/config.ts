@@ -1,9 +1,11 @@
+import path from 'path'
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
+import { generateSidebar } from '@rmf2-docs/api-docs'
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid(
@@ -64,10 +66,60 @@ export default withMermaid(
           },
           { text: 'Config & API References', link: '/references/overview' },
         ],
-        '/references': [
-          { text: 'Overview', link: '/references/overview' },
-          { text: 'VDA5050 Core', link: '/references/vda5050_core' },
-        ],
+        '/references': {
+          base: '/references/',
+          items: [
+            { text: 'Overview', link: 'overview' },
+            {
+              text: 'VDA5050 Core',
+              items: [
+                {
+                  text: 'C++',
+                  collapsed: true,
+                  base: '/references/vda5050_core/cpp/',
+                  // `.md` so VitePress normalizes the link to `.../cpp/` and
+                  // marks the item active on the index page (a bare `index`
+                  // stays `.../cpp/index` and never matches).
+                  link: 'index.md',
+                  items: await generateSidebar(
+                    path.resolve(__dirname, '../references/vda5050_core/cpp')
+                  ),
+                },
+              ],
+            },
+            {
+              text: 'RMF2 Scheduler',
+              items: [
+                {
+                  text: 'C++',
+                  collapsed: true,
+                  base: '/references/rmf2_scheduler/cpp/',
+                  link: 'index.md',
+                  items: await generateSidebar(
+                    path.resolve(__dirname, '../references/rmf2_scheduler/cpp')
+                  ),
+                },
+              ],
+            },
+            {
+              text: 'RES MAPF',
+              items: [
+                {
+                  text: 'Python',
+                  collapsed: true,
+                  base: '/references/res_mapf/python/',
+                  link: 'index.md',
+                  items: await generateSidebar(
+                    path.resolve(__dirname, '../references/res_mapf/python'),
+                    // Full module-tree nesting (Python names have no separator
+                    // inside a segment, unlike C++ template args).
+                    { separator: '.', fromFilename: true, groupDepth: Infinity }
+                  ),
+                },
+              ],
+            },
+          ],
+        },
       },
 
       footer: {

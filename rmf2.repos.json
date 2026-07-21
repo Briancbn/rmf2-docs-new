@@ -1,0 +1,42 @@
+[
+  {
+    "name": "vda5050_core",
+    "url": "https://github.com/Briancbn/vda5050_client.git",
+    "type": "git",
+    "version": "feat/bn/add-doxyfile",
+    "docs": [
+      {
+        "type": "doxygen",
+        "xmlPath": "docs/api/xml",
+        "outDir": "./docs/references/vda5050_core/cpp"
+      }
+    ]
+  },
+  {
+    "name": "rmf2_scheduler",
+    "url": "https://github.com/Briancbn/rmf_scheduler.git",
+    "type": "git",
+    "version": "fix/bn/doxygen-xml",
+    "docs": [
+      {
+        "type": "doxygen",
+        "xmlPath": "docs/api/xml",
+        "outDir": "./docs/references/rmf2_scheduler/cpp"
+      }
+    ]
+  },
+  {
+    "name": "res_mapf",
+    "url": "https://github.com/ros-industrial/res_mapf.git",
+    "type": "git",
+    "version": "main",
+    "docs": [
+      {
+        "type": "lazydocs",
+        "projectDir": "res_mapf",
+        "srcPaths": ["res_mapf_planning"],
+        "outDir": "./docs/references/res_mapf/python"
+      }
+    ]
+  }
+]
