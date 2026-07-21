@@ -46,6 +46,10 @@ interface LazydocsConfig {
   srcPaths: string[]
 }
 
+// How lazydocs reports a module it could not import or render. It keeps going
+// (and exits 0) afterwards, so this is the only trace such a module leaves.
+const FAILED_MODULE = /^Failed to generate docs for module (.+)$/gm
+
 // lazydocs symbol kinds -> VitePress <Badge> types.
 const BADGE_TYPE: Record<string, string> = {
   module: 'tip',
@@ -112,6 +116,13 @@ function sanitizeForVitepress(markdown: string): string {
     .join('\n')
 }
 
+// lazydocs is installed from git rather than PyPI: the last release (0.4.8,
+// 2021) imports every module via the `find_module`/`load_module` loader API that
+// Python 3.12 removed, so on 3.12+ it fails for all modules and writes nothing.
+// The fix only exists on master, so pin the commit for reproducible builds.
+const LAZYDOCS_PACKAGE =
+  'lazydocs@git+https://github.com/ml-tooling/lazydocs.git@fc1b6fe66915d6ce610ebf51582d171df3ba5000'
+
 // Python (lazydocs) API-docs generator: runs lazydocs via uv to render markdown
 // from Google-style docstrings. `uv run --with lazydocs` provides the project's
 // environment plus lazydocs, so it can import the target modules.
@@ -138,12 +149,12 @@ export const lazydocsGenerator: ApiDocsGenerator = {
     }
 
     console.log(`\n⚙ lazydocs: ${name} -> ${outDir}`)
-    await run(
+    const output = await run(
       'uv',
       [
         'run',
         '--with',
-        'lazydocs',
+        LAZYDOCS_PACKAGE,
         'lazydocs',
         '--output-path',
         outDir,
@@ -159,10 +170,22 @@ export const lazydocsGenerator: ApiDocsGenerator = {
       !verbose
     )
 
+    // lazydocs catches per-module errors, reports them on stdout and still exits
+    // 0, so a run that documents nothing at all looks like a success. Echo the
+    // skipped modules even when quiet, and treat producing no pages whatsoever
+    // as a hard failure — that is the signature of lazydocs being broken against
+    // the interpreter rather than of one awkward module.
+    const skipped = [...output.matchAll(FAILED_MODULE)].map((m) => m[1])
+    if (skipped.length) {
+      console.warn(`  ⚠ lazydocs skipped ${skipped.length} module(s):`)
+      for (const line of skipped) console.warn(`    ${line}`)
+    }
+
     // Sanitize for VitePress, restructure into the C++ page layout, and drop any
     // module with no documentable content.
     const readSource = makeSourceReader(repoDir)
     let removed = 0
+    let written = 0
     for (const entry of readdirSync(outDir)) {
       if (!entry.endsWith('.md')) continue
       const file = join(outDir, entry)
@@ -175,9 +198,17 @@ export const lazydocsGenerator: ApiDocsGenerator = {
         removed += 1
       } else {
         writeFileSync(file, `${FRONTMATTER}\n${formatted}`)
+        written += 1
       }
     }
     if (removed) console.log(`  removed ${removed} empty page(s)`)
+    if (written === 0) {
+      throw new Error(
+        `lazydocs generated no pages for ${name}. Re-run with --verbose to see ` +
+          `its output; check that ${doc.srcPaths?.join(', ')} is importable from ` +
+          `${cwd} and that lazydocs supports the interpreter uv selected.`
+      )
+    }
 
     // Landing index for the generated Python pages. Mirrors the C++ index: the
     // shared, sidebar-grouped outline rather than lazydocs' flat overview.

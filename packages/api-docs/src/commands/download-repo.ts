@@ -3,8 +3,8 @@ import { join } from 'node:path'
 import type { RepoInfo } from '../types'
 import { run } from '../utils'
 
-function git(cwd: string, ...gitArgs: string[]): Promise<void> {
-  return run('git', gitArgs, cwd)
+async function git(cwd: string, ...gitArgs: string[]): Promise<void> {
+  await run('git', gitArgs, cwd)
 }
 
 export async function downloadRepo(
