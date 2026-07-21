@@ -34,7 +34,12 @@
       {
         "type": "lazydocs",
         "projectDir": "res_mapf",
-        "srcPaths": ["res_mapf_planning"],
+        "srcPaths": [
+          "res_mapf_planning",
+          "res_plan_execution",
+          "res_plan_server",
+          "res_pybullet"
+        ],
         "outDir": "./docs/references/res_mapf/python"
       }
     ]

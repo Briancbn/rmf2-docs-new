@@ -42,8 +42,15 @@ interface ModuleDoc {
   name: string
   doc: string
   source?: string
+  globals: GlobalVar[]
   classes: ClassDoc[]
   functions: Member[]
+}
+
+// A module-level name from the lazydocs `**Global Variables**` block.
+interface GlobalVar {
+  name: string
+  desc?: string
 }
 
 interface RawSymbol {
@@ -117,17 +124,48 @@ function toMember(raw: RawSymbol): Member {
   return { kind: raw.kind, name: raw.name, signature, doc, source: raw.source }
 }
 
+// lazydocs appends a `**Global Variables**` block to the module docstring, one
+// `- **name**` entry per module-level name, optionally followed by `: <doc>`.
+// The block is always last, so everything from the marker on belongs to it.
+const GLOBALS_MARKER = /^\*\*Global Variables\*\*\s*$/
+const GLOBAL_ENTRY = /^-\s+\*\*(\w+)\*\*(?::\s*(.*))?$/
+
+// Split the trailing `**Global Variables**` block off a module docstring.
+// For a re-exported submodule lazydocs uses the submodule's leading comment as
+// its "doc", which is the Apache licence header — a wall of boilerplate on every
+// package page. Continuation lines and any `#`-comment value are dropped, so
+// such an entry keeps its name and loses the licence text.
+function splitGlobals(doc: string): { doc: string; globals: GlobalVar[] } {
+  const lines = doc.split('\n')
+  const start = lines.findIndex((line) => GLOBALS_MARKER.test(line.trim()))
+  if (start === -1) return { doc, globals: [] }
+
+  const globals: GlobalVar[] = []
+  for (const line of lines.slice(start + 1)) {
+    const entry = line.match(GLOBAL_ENTRY)
+    if (!entry) continue
+    const desc = entry[2]?.trim()
+    globals.push({
+      name: entry[1],
+      desc: desc && !desc.startsWith('#') ? desc : undefined,
+    })
+  }
+  return { doc: lines.slice(0, start).join('\n').trim(), globals }
+}
+
 // Group the flat symbol list into a module with its classes (and their members)
 // and top-level functions.
 function buildModule(symbols: RawSymbol[]): ModuleDoc | null {
   if (symbols.length === 0) return null
 
   const head = symbols[0]
-  const { doc } = splitBody(head.body)
+  const { doc: rawDoc } = splitBody(head.body)
+  const { doc, globals } = splitGlobals(rawDoc)
   const module: ModuleDoc = {
     name: head.name,
     doc,
     source: head.source,
+    globals,
     classes: [],
     functions: [],
   }
@@ -463,6 +501,17 @@ function render(
     )
   }
 
+  if (module.globals.length > 0) {
+    out.push(
+      '## Global Variables',
+      '',
+      ...module.globals.map((g) =>
+        g.desc ? `- \`${g.name}\` — ${cell(g.desc)}` : `- \`${g.name}\``
+      ),
+      ''
+    )
+  }
+
   // Module docstring beyond its first paragraph.
   const rest = renderDoc(
     module.doc
@@ -555,6 +604,7 @@ export function formatModulePage(
   if (
     !module ||
     (!module.doc.trim() &&
+      module.globals.length === 0 &&
       module.classes.length === 0 &&
       module.functions.length === 0)
   ) {
