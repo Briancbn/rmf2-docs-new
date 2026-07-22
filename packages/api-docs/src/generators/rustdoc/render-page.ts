@@ -350,12 +350,11 @@ interface ModuleEntry {
   item: Item
   path: string
   children: Array<{ item: Item; path: string }>
-  // `pub use` targets, resolved but not yet claimed — see `adoptReexports`.
-  reexports: Array<{ item: Item; path: string }>
 }
 
 // Walk the module tree from the crate root, collecting each module with the
-// items declared directly in it, plus the targets of its `pub use` re-exports.
+// items declared directly in it. Only items reachable through public modules
+// are documented; anything in a private module stays out of the docs.
 function collectModules(
   ctx: RenderContext,
   id: number,
@@ -366,62 +365,24 @@ function collectModules(
   if (!module || kindOf(module) !== 'module') return
 
   const children: Array<{ item: Item; path: string }> = []
-  const reexports: Array<{ item: Item; path: string }> = []
   const submodules: Array<[number, string]> = []
 
   for (const childId of module.inner.module?.items ?? []) {
     const child = item(ctx, childId)
-    if (!child) continue
+    if (!child?.name) continue
     const kind = kindOf(child)
-    // A `use` item carries its name inside `inner`, not on the item itself.
-    const name = kind === 'use' ? child.inner.use?.name : child.name
-    if (!name) continue
-    const childPath = `${path}::${name}`
+    const childPath = `${path}::${child.name}`
 
     if (kind === 'module') {
       submodules.push([childId, childPath])
     } else if (PAGE_KINDS.has(kind) || INLINE_KINDS.has(kind)) {
       children.push({ item: child, path: childPath })
-    } else if (kind === 'use') {
-      // A `pub use` can be the only public route to an item living in a
-      // private module, so resolve the target and let `adoptReexports` decide
-      // whether this module has to document it.
-      const use = child.inner.use ?? {}
-      if (use.is_glob) continue
-      const target = use.id === undefined ? undefined : item(ctx, use.id)
-      if (!target) continue
-      if (!PAGE_KINDS.has(kindOf(target)) && !INLINE_KINDS.has(kindOf(target)))
-        continue
-      // The re-export name wins: `pub use x::Y as Z` is public as `Z`.
-      reexports.push({ item: target, path: childPath })
     }
   }
 
-  out.push({ item: module, path, children, reexports })
+  out.push({ item: module, path, children })
   for (const [subId, subPath] of submodules)
     collectModules(ctx, subId, subPath, out)
-}
-
-// Attach each re-exported item to a module page, but only when it is not
-// already documented where it is defined. That keeps a convenience re-export
-// like the crate root's `pub use client::Clients` from duplicating the page in
-// `client`, while still documenting `pub use clients::amqp::AmqpConnection`,
-// whose defining module is private and therefore never walked.
-function adoptReexports(modules: ModuleEntry[]): number {
-  const documented = new Set<number>()
-  for (const module of modules)
-    for (const child of module.children) documented.add(child.item.id)
-
-  let adopted = 0
-  for (const module of modules) {
-    for (const reexport of module.reexports) {
-      if (documented.has(reexport.item.id)) continue
-      documented.add(reexport.item.id)
-      module.children.push(reexport)
-      adopted += 1
-    }
-  }
-  return adopted
 }
 
 // Render every module and type in the crate. Cross-page links need the full set
@@ -440,7 +401,6 @@ export function renderPages(
 
   const modules: ModuleEntry[] = []
   collectModules(ctx, crate.root, options.crateName, modules)
-  adoptReexports(modules)
 
   for (const module of modules) {
     for (const child of module.children) {
