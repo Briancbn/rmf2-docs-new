@@ -263,6 +263,7 @@ Some issues we've identified so far and their potential solutions.
 ### UE5 simulation crashes immediately — `cannot create a Vulkan device`
 
 **Behavior:** The simulation exits right after launch with a message like:
+
 > `cannot create a vulkan device, try updating your video driver to a more recent version`
 
 This is a known issue on **Ubuntu 24.04**, which ships with an outdated Vulkan stack. Fix it with the steps below.
@@ -286,7 +287,7 @@ Then reboot or restart GDM:
 ```bash
 sudo systemctl restart gdm3
 #or
-sudo reboot 
+sudo reboot
 ```
 
 **Step 2 — Install Vulkan drivers**
@@ -295,19 +296,20 @@ sudo reboot
 sudo apt install libvulkan1 vulkan-tools mesa-vulkan-drivers
 ```
 
-
 ### UE5 crashes with `VK_ERROR_DEVICE_LOST`
 
 **Behavior:** The simulation crashes with:
+
 > `VulkanRHI::vkDeviceWaitIdle(Device) failed, VkResult=-4`
 > `error VK_ERROR_DEVICE_LOST`
 
 On laptops with both an Intel iGPU and an Nvidia GPU, UE5 may pick the wrong device or PRIME offload may misbehave. Force the Nvidia GPU when launching:
 
 ```bash
-__NV_PRIME_RENDER_OFFLOAD=1 
-__GLX_VENDOR_LIBRARY_NAME=nvidia 
+__NV_PRIME_RENDER_OFFLOAD=1
+__GLX_VENDOR_LIBRARY_NAME=nvidia
 ```
+
 Then try:
 
 ```bash

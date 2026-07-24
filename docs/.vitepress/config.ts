@@ -5,7 +5,7 @@ import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
-import { generateSidebar } from '@rmf2-docs/api-docs'
+import { generateSidebar, homePageTitle } from '@rmf2-docs/api-docs'
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid(
@@ -19,6 +19,7 @@ export default withMermaid(
       siteTitle: 'RMF Industrial',
       nav: [
         { text: 'Guide', link: '/guide/what-is-rmf2' },
+        { text: 'Modules', link: '/modules/' },
         { text: 'References', link: '/references/overview' },
         {
           text: process.env.VITE_DOCS_VERSION ?? 'latest',
@@ -44,25 +45,79 @@ export default withMermaid(
             ],
           },
           {
-            text: 'Module Documentation',
-            items: [
-              { text: 'Simulation (UE5)', link: '/guide/simulation' },
-              { text: 'VDA5050 — Master & Client', link: '/guide/vda5050' },
-              { text: 'MAPF (unified)', link: '/guide/mapf' },
-              {
-                text: 'Task & Task Orchestrator',
-                link: '/guide/task-orchestrator',
-              },
-              { text: 'Scheduler', link: '/guide/scheduler' },
-              { text: 'UI', link: '/guide/ui' },
-            ],
-          },
-          {
             text: 'How-tos',
             items: [
               { text: 'Launch scripts', link: '/guide/launch-scripts' },
               { text: 'Create a workflow', link: '/guide/create-workflow' },
             ],
+          },
+          {
+            text: 'Tutorials',
+            items: [
+              {
+                text: 'Simulation (UE5)',
+                link: '/guide/tutorials/simulation',
+              },
+              {
+                text: 'VDA5050 — Master & Client',
+                link: '/guide/tutorials/vda5050',
+              },
+              { text: 'MAPF (unified)', link: '/guide/tutorials/mapf' },
+              {
+                text: 'Task & Task Orchestrator',
+                link: '/guide/tutorials/task-orchestrator',
+              },
+              { text: 'Scheduler', link: '/guide/tutorials/scheduler' },
+              { text: 'UI', link: '/guide/tutorials/ui' },
+            ],
+          },
+          { text: 'Module Documentation', link: '/modules/' },
+          { text: 'Config & API References', link: '/references/overview' },
+        ],
+
+        // Sidebar config for `modules` directory
+        '/modules/': [
+          { text: 'Overview', link: '/modules/' },
+          {
+            text: 'Simulation',
+            items: [{ text: 'Simulation (UE5)', link: '/modules/simulation' }],
+          },
+          {
+            text: 'Fleet Interface',
+            items: [
+              { text: 'VDA5050 — Master & Client', link: '/modules/vda5050' },
+            ],
+          },
+          {
+            text: 'Planning & Execution',
+            items: [{ text: 'MAPF (unified)', link: '/modules/mapf' }],
+          },
+          {
+            text: 'Task Orchestration',
+            base: '/modules/task-orchestrator/',
+            // Generated from the rmf2_task_orchestrator repo (README -> home
+            // page, plus its docs/ folder) by `pnpm docs:generate-api`. The
+            // home page's sidebar title comes from its `homePageTitle`.
+            items: [
+              {
+                text: homePageTitle(
+                  path.resolve(__dirname, '../modules/task-orchestrator')
+                ),
+                link: 'index.md',
+              },
+              ...(await generateSidebar(
+                path.resolve(__dirname, '../modules/task-orchestrator'),
+                { separator: '/', groupDepth: 1 }
+              )),
+            ],
+          },
+          {
+            text: 'Scheduling',
+            items: [{ text: 'Scheduler', link: '/modules/scheduler' }],
+          },
+          {
+            text: 'Interfaces',
+            items: [{ text: 'UI', link: '/modules/ui' }],
           },
           { text: 'Config & API References', link: '/references/overview' },
         ],

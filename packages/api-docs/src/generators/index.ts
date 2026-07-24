@@ -1,5 +1,6 @@
 import { doxygenGenerator } from './doxygen'
 import { griffeGenerator } from './griffe'
+import { markdownGenerator } from './markdown'
 import { rustdocGenerator } from './rustdoc'
 import type { ApiDocsGenerator, DocsConfig } from '../types'
 
@@ -13,4 +14,5 @@ export function registerGenerator(generator: ApiDocsGenerator): void {
 // Built-in generators.
 registerGenerator(doxygenGenerator)
 registerGenerator(griffeGenerator)
+registerGenerator(markdownGenerator)
 registerGenerator(rustdocGenerator)

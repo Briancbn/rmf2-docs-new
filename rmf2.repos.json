@@ -46,10 +46,17 @@
   },
   {
     "name": "rmf2_task_orchestrator",
-    "url": "https://github.com/ros-industrial/rmf2_task_orchestrator.git",
+    "url": "https://github.com/DillonChew98/rmf2_task_orchestrator.git",
     "type": "git",
-    "version": "main",
+    "version": "chore/dillon/update-readme",
     "docs": [
+      {
+        "type": "markdown",
+        "homePage": "README.md",
+        "docsDir": "docs",
+        "homePageTitle": "Overview",
+        "outDir": "./docs/modules/task-orchestrator"
+      },
       {
         "type": "rustdoc",
         "crateName": "rmf2_task_orchestrator",

@@ -22,31 +22,31 @@ features:
       src: /icons/FcCamcorderPro.svg
     title: Simulation & Digital Twin
     details: Large Scale Photorealistic Simulation / Digital Twin in Unreal Engine.
-    link: /guide/simulation
+    link: /modules/simulation
   - icon:
       src: /icons/FcApproval.svg
     title: VDA5050 Support
     details: Out-of-box support and tooling for VDA5050 Compatibility.
-    link: /guide/vda5050
+    link: /modules/vda5050
   - icon:
       src: /icons/FcMindMap.svg
     title: Multi-Agent Path Finding and Execution
     details: Scalable route planning and deterministic execution.
-    link: /guide/mapf
+    link: /modules/mapf
   - icon:
       src: /icons/FcWorkflow.svg
     title: Workflow Orchestration
     details: Effortless Workflow definition and customization.
-    link: /guide/task-orchestrator
+    link: /modules/task-orchestrator/
   - icon:
       src: /icons/FcTimeline.svg
     title: Task Scheduling
     details: Highly Efficient Task Scheduling for Machines, Humanoids and Mobile Robots.
-    link: /guide/scheduler
+    link: /modules/scheduler
   - icon: 🖥️
     title: Web Dashboard & UI
     details: React Library and Sample Web Dashboard for monitoring and control.
-    link: /guide/ui
+    link: /modules/ui
   # - icon: 🚀
   #   title: Fast Deployment
   #   details: Continuous Delivery through building, testing, and shipping isolated features as microservices.
@@ -70,7 +70,7 @@ Read them in order:
 3. **[Getting started](/guide/getting-started)** — build the images and bring the stack up
 4. **[Demos](/guide/demos)** — run it end to end
 
-From there, each module has its own page — **[Simulation](/guide/simulation)**,
-**[VDA5050](/guide/vda5050)**, **[MAPF](/guide/mapf)**,
-**[Task Orchestrator](/guide/task-orchestrator)**, **[Scheduler](/guide/scheduler)**, and
-**[UI](/guide/ui)** — dive into whichever you need.
+From there, each module has its own page — **[Simulation](/modules/simulation)**,
+**[VDA5050](/modules/vda5050)**, **[MAPF](/modules/mapf)**,
+**[Task Orchestrator](/modules/task-orchestrator/)**, **[Scheduler](/modules/scheduler)**, and
+**[UI](/modules/ui)** — dive into whichever you need.

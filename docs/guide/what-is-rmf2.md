@@ -14,27 +14,27 @@ Each capability is an independent, swappable module, shipped as its own Docker i
 ### Simulation & Digital Twin
 
 Large-scale photorealistic simulation / digital twin in **Unreal Engine**, standing in for
-the physical robots. → [Simulation](/guide/simulation)
+the physical robots. → [Simulation](/modules/simulation)
 
 ### VDA5050 Support
 
-Out-of-the-box support and tooling for VDA5050 compatibility. → [VDA5050](/guide/vda5050)
+Out-of-the-box support and tooling for VDA5050 compatibility. → [VDA5050](/modules/vda5050)
 
 ### Multi-Agent Path Finding and Execution
 
-Scalable route planning and deterministic execution. → [MAPF](/guide/mapf)
+Scalable route planning and deterministic execution. → [MAPF](/modules/mapf)
 
 ### Workflow Orchestration
 
-Effortless workflow definition and customization. → [Task Orchestrator](/guide/task-orchestrator)
+Effortless workflow definition and customization. → [Task Orchestrator](/modules/task-orchestrator/)
 
 ### Task Scheduling
 
-Highly efficient task scheduling for machines, humanoids and mobile robots. → [Scheduler](/guide/scheduler)
+Highly efficient task scheduling for machines, humanoids and mobile robots. → [Scheduler](/modules/scheduler)
 
 ### Web Dashboard & UI
 
-React library and sample web dashboard for monitoring and control. → [UI](/guide/ui)
+React library and sample web dashboard for monitoring and control. → [UI](/modules/ui)
 
 ## Why it's built this way
 
@@ -43,15 +43,15 @@ orchestration, AGV protocol, simulation — independent and replaceable. You can
 or deploy any module on its own, and continuously ship isolated features without disturbing
 the rest of the fleet.
 
-| Module                                        | Repo                     | Image                                       |
-| --------------------------------------------- | ------------------------ | ------------------------------------------- |
-| [Simulation](/guide/simulation)               | `simulation/`            | UE5 packaged binary                         |
-| [VDA5050](/guide/vda5050)                     | `vda5050_fiware_repo`    | `vda5050_fiware_repo-vda5050_fiware:latest` |
-| [MAPF (unified)](/guide/mapf)                 | `mapf_unified_repo`      | `mapf_unified:latest`                       |
-| [Task Orchestrator](/guide/task-orchestrator) | `task_orchestrator_repo` | `task_orchestrator:latest`                  |
-| IOCS broker stack                             | `rmf2_broker_repo`       | Scorpio / Redis / RabbitMQ / Postgres       |
-| [Scheduler](/guide/scheduler)                 | `rmf2_scheduler`         | _not in demo yet_                           |
-| [UI](/guide/ui)                               | `rmf2-ui`                | _not in demo yet_                           |
+| Module                                           | Repo                     | Image                                       |
+| ------------------------------------------------ | ------------------------ | ------------------------------------------- |
+| [Simulation](/modules/simulation)                | `simulation/`            | UE5 packaged binary                         |
+| [VDA5050](/modules/vda5050)                      | `vda5050_fiware_repo`    | `vda5050_fiware_repo-vda5050_fiware:latest` |
+| [MAPF (unified)](/modules/mapf)                  | `mapf_unified_repo`      | `mapf_unified:latest`                       |
+| [Task Orchestrator](/modules/task-orchestrator/) | `task_orchestrator_repo` | `task_orchestrator:latest`                  |
+| IOCS broker stack                                | `rmf2_broker_repo`       | Scorpio / Redis / RabbitMQ / Postgres       |
+| [Scheduler](/modules/scheduler)                  | `rmf2_scheduler`         | _not in demo yet_                           |
+| [UI](/modules/ui)                                | `rmf2-ui`                | _not in demo yet_                           |
 
 > All containers share the Docker network `rmf2_broker_rmf-network`.
 

@@ -1,7 +1,7 @@
 # Create a workflow
 
 A workflow is a **Crossflow diagram**: a small JSON graph the
-[Task Orchestrator](/guide/task-orchestrator) executes to coordinate one or more robots.
+[Task Orchestrator](/guide/tutorials/task-orchestrator) executes to coordinate one or more robots.
 This page shows how to author one from scratch, then how to send it.
 
 ::: tip Read the Crossflow handbook
@@ -37,7 +37,7 @@ branch.
 Each `node` names a `builder` the orchestrator registers — `MAPFGoToNode` (AMR move via AMQP),
 `MQTTTaskRequestNode` (transfer tasks: `liftrack` / `depalletize` / `droprack` via MQTT),
 `WaitAMRTaskNode`, `DefaultNode`. The `config` keys differ per builder — see
-[Workflow nodes](/guide/task-orchestrator#workflow-nodes) for each one's parameters.
+[Workflow nodes](/guide/tutorials/task-orchestrator#workflow-nodes) for each one's parameters.
 :::
 
 ## Example: sequential pickup → dropoff
@@ -110,7 +110,7 @@ location, and puts it down. It chains a `MAPFGoToNode` (move) and a `MQTTTaskReq
 Reading it: start at `drive_to_rack` (the AMR moves to rack `P63`), `liftrack` picks the rack
 up, `drive_to_dropoff` moves to `P300`, `droprack` sets it down, then terminate. `coordinates`
 must be real map waypoints, and every `task_id` / `id` must be unique (see the Task Orchestrator
-[limitations](/guide/task-orchestrator#limitations)).
+[limitations](/guide/tutorials/task-orchestrator#limitations)).
 
 ## Example: parallel multi-robot (fork → join)
 
@@ -128,7 +128,7 @@ before continuing to `terminate`.
 For N robots, building this by hand is tedious. The
 `send_parallel_workflow_3_robots.py` tester generates the fork/buffer/join ops
 programmatically — a good template to copy. See
-[Try it directly](/guide/task-orchestrator#try-it-directly-send-to-test).
+[Try it directly](/guide/tutorials/task-orchestrator#try-it-directly-send-to-test).
 :::
 
 ## Run it in the editor

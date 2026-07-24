@@ -28,12 +28,12 @@ services in the right order, and reporting status back. It's the layer between
 
 A few related concepts show up across the system — worth pinning down:
 
-| Term                 | What it is                                                                                                                                         |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **TaskRequest**      | A single requested action on an asset (e.g. `liftrack`, `depalletize`). See the [Simulation TaskRequest format](/guide/simulation#message-format). |
-| **Schedule**         | A wrapper carrying a **workflow diagram** (`{ id, type: "Schedule", payload: <diagram> }`) published to the AMQP `@RECEIVE@` exchange.             |
-| **Workflow diagram** | A Crossflow graph of operations (fork / nodes / join). Samples in `workflow_executor/diagrams/`.                                                   |
-| **TaskStatus**       | Progress/completion messages emitted as the workflow runs.                                                                                         |
+| Term                 | What it is                                                                                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **TaskRequest**      | A single requested action on an asset (e.g. `liftrack`, `depalletize`). See the [Simulation TaskRequest format](/guide/tutorials/simulation#message-format). |
+| **Schedule**         | A wrapper carrying a **workflow diagram** (`{ id, type: "Schedule", payload: <diagram> }`) published to the AMQP `@RECEIVE@` exchange.                       |
+| **Workflow diagram** | A Crossflow graph of operations (fork / nodes / join). Samples in `workflow_executor/diagrams/`.                                                             |
+| **TaskStatus**       | Progress/completion messages emitted as the workflow runs.                                                                                                   |
 
 In short: a **Schedule** carries a **workflow diagram** that the orchestrator executes,
 which in turn issues **TaskRequests** to robots/services and reports **TaskStatus** back.

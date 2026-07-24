@@ -35,11 +35,27 @@ export async function downloadRepo(
       url,
       name
     )
-  } else if (forceUpdate) {
-    console.log(`\n↻ Updating ${label} (force)`)
+  } else {
+    // A manifest `url` change must reach an existing clone, or it would keep
+    // fetching from the old fork (and a branch that only exists on the new one
+    // would fail to resolve). Reconcile `origin` first, and treat a moved
+    // remote as reason enough to re-sync even without `--pull`.
+    const origin = (
+      await run('git', ['remote', 'get-url', 'origin'], dest, true)
+    ).trim()
+    const moved = origin !== url
+
+    if (moved) {
+      console.log(`\n↻ Updating ${label} (remote moved: ${origin} -> ${url})`)
+      await git(dest, 'remote', 'set-url', 'origin', url)
+    } else if (forceUpdate) {
+      console.log(`\n↻ Updating ${label} (force)`)
+    } else {
+      console.log(`\n✓ ${label} already present`)
+      return
+    }
+
     await git(dest, 'fetch', 'origin', ...(version ? [version] : []))
     await git(dest, 'reset', '--hard', 'FETCH_HEAD')
-  } else {
-    console.log(`\n✓ ${label} already present`)
   }
 }

@@ -17,7 +17,7 @@ python3 send_workflow.py
 
 ![Task Orchestrator coordinating multi-robot execution in the warehouse simulation](/demo/task-orchestrator-overview.gif)
 
-→ More info: [Task Orchestrator](/guide/task-orchestrator) · [Create a workflow](/guide/create-workflow)
+→ More info: [Task Orchestrator](/modules/task-orchestrator/) · [Create a workflow](/guide/create-workflow)
 
 ## 2. Send a MAPF request to MAPF
 
@@ -28,7 +28,7 @@ cd ~/ros_industrial_ws/ros_industrial_demo/test_scripts/mapf
 
 ![Demo_Mapf](/demo/mapf-step-01.gif)
 
-→ More info: [MAPF](/guide/mapf)
+→ More info: [MAPF](/modules/mapf)
 
 ## 3. Send a VDA5050 order to the VDA5050 master
 
@@ -39,7 +39,7 @@ cd ~/ros_industrial_ws/ros_industrial_demo/test_scripts/vda5050
 
 ![Demo_Vda5050](/demo/vda5050-step-01.gif)
 
-→ More info: [VDA5050](/guide/vda5050)
+→ More info: [VDA5050](/modules/vda5050)
 
 ## 4. Control a simulation
 
@@ -52,7 +52,7 @@ cd ~/ros_industrial_ws/ros_industrial_demo/test_scripts/simulation
 
 ![Simulation cycle](/demo/simulation-step-02.gif)
 
-→ More info: [Simulation](/guide/simulation)
+→ More info: [Simulation](/modules/simulation)
 
 ## Tear down
 
