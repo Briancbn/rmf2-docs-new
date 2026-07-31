@@ -12,6 +12,7 @@ export default withMermaid(
     description: 'RMF2 Documentation',
     // localhost URLs in module docs are runtime endpoints, not site links
     ignoreDeadLinks: [/^https?:\/\/localhost/],
+    head: [['link', { rel: 'icon', href: '/icons/logo-dark.svg' }]],
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
       siteTitle: 'RMF Industrial',
@@ -71,11 +72,20 @@ export default withMermaid(
       },
 
       footer: {
-        message: 'Released under the Apache-2.0 License.',
-        copyright: 'Copyright (C) 2026 ROS-Industrial Consortium Asia Pacific',
+        message:
+          'For collaboration opportunities, please reach out to <a href="mailto:ros-i_asia@a-star.edu.sg">ros-i_asia@a-star.edu.sg</a>',
+        copyright:
+          'Released under the <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache-2.0 License</a>  |  © 2026 <a href="https://rosindustrial.org/ric-apac">ROS-Industrial Consortium Asia Pacific</a>',
       },
 
       socialLinks: [
+        {
+          icon: {
+            svg: '<svg width="1em" height="1em" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" ><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" /><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" /></svg>',
+          },
+          link: 'mailto:ros-i_asia@a-star.edu.sg',
+          ariaLabel: 'email',
+        },
         {
           icon: 'github',
           link: 'https://github.com/ros-industrial/rmf_industrial',

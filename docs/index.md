@@ -6,6 +6,9 @@ hero:
   name: 'RMF Industrial'
   text: 'Documentation'
   tagline: Fleet Management for Manufacturing and Logistics
+  image:
+    light: /icons/logo-light.svg
+    dark: /icons/logo-dark.svg
   actions:
     - theme: brand
       text: What is RMF Industrial

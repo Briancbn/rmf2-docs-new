@@ -68,7 +68,10 @@ docs/
 │   ├── <page-name>.md         # individual guide pages
 │   └── ...
 ├── references/                # API references
-└── .vitepress/config.ts       # nav, sidebar, search
+│   └── ...
+└── .vitepress/
+    ├── theme/                 # theme config, CSS overrides
+    └── config.ts              # nav, sidebar, search
 ```
 
 ## Editing tips
