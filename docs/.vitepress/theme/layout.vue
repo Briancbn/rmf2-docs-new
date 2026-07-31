@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import DefaultTheme from 'vitepress/theme'
-import Footer from './footer.vue'
 const { Layout } = DefaultTheme
 </script>
 
