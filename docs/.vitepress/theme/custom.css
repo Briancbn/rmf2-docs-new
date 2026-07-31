@@ -1,0 +1,8 @@
+.only-light,
+html.dark .only-dark {
+  display: block;
+}
+.only-dark,
+html.dark .only-light {
+  display: none;
+}
