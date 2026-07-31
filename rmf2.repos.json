@@ -1,9 +1,9 @@
 [
   {
     "name": "vda5050_core",
-    "url": "https://github.com/Briancbn/vda5050_client.git",
+    "url": "https://github.com/ros-industrial/vda5050_core.git",
     "type": "git",
-    "version": "feat/bn/add-doxyfile",
+    "version": "develop",
     "docs": [
       {
         "type": "doxygen",
