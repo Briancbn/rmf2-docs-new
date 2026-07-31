@@ -1,5 +1,12 @@
 import { join } from 'node:path'
-import { mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs'
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs'
 import type { ApiDocsGenerator, GenerateContext } from '../../types'
 import { run as runMoxygen, defaultFilters } from 'moxygen'
 import { run, isContentEmpty } from '../../utils'
@@ -61,18 +68,41 @@ export const doxygenGenerator: ApiDocsGenerator = {
       quiet: !verbose,
     })
 
-    // Remove pages that ended up with no real content (title only).
-    let removed = 0
+    // Remove pages that ended up with no real content (title only), keeping the
+    // basenames so cross-references to them can be repaired below.
+    const removed = new Set<string>()
     for (const entry of readdirSync(outDir)) {
       const file = join(outDir, entry)
       if (entry.endsWith('.md') && isContentEmpty(readFileSync(file, 'utf8'))) {
         rmSync(file)
-        removed += 1
+        removed.add(entry.slice(0, -'.md'.length))
       }
     }
-    if (removed) console.log(`  removed ${removed} empty page(s)`)
+    if (removed.size) console.log(`  removed ${removed.size} empty page(s)`)
 
     // Landing index for the generated C++ pages.
     await generateIndex(outDir, name)
+
+    // Repair links to the removed pages: their content is folded into the
+    // landing `index.md`, so point cross-references there. The root page
+    // (basename `name`) shares index.md's title/anchor, so its fragment is
+    // preserved; other removed pages have no matching anchor, so drop it.
+    // Only runs when there is an index.md to point at (generateIndex skips
+    // writing one when there are no pages to list).
+    if (removed.size && existsSync(join(outDir, 'index.md'))) {
+      for (const entry of readdirSync(outDir)) {
+        if (!entry.endsWith('.md')) continue
+        const file = join(outDir, entry)
+        const original = readFileSync(file, 'utf8')
+        const fixed = original.replace(
+          /\]\((?:\.\/)?([^)#\s]+)\.md(#[^)\s]+)?\)/g,
+          (whole, page: string, fragment = '') =>
+            removed.has(page)
+              ? `](index.md${page === name ? fragment : ''})`
+              : whole
+        )
+        if (fixed !== original) writeFileSync(file, fixed)
+      }
+    }
   },
 }
