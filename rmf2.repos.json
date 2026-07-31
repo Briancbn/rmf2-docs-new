@@ -14,9 +14,9 @@
   },
   {
     "name": "rmf2_scheduler",
-    "url": "https://github.com/Briancbn/rmf_scheduler.git",
+    "url": "https://github.com/ros-industrial/rmf2_scheduler.git",
     "type": "git",
-    "version": "fix/bn/doxygen-xml",
+    "version": "main",
     "docs": [
       {
         "type": "doxygen",
