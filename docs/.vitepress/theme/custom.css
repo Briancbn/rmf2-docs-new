@@ -6,3 +6,14 @@ html.dark .only-dark {
 html.dark .only-light {
   display: none;
 }
+
+.VPFooter.has-sidebar {
+  display: block !important;
+  @media (max-width: 960px) {
+    margin-left: 0 !important;
+  }
+  /* Below when the sidebar is visible */
+  @media (min-width: 960px) {
+    margin-left: var(--vp-sidebar-width) !important;
+  }
+}
