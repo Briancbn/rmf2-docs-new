@@ -9,19 +9,19 @@
   }
   /* Below when the sidebar AND aside is visible */
   --footer-aside-width: 256px;
+  --footer-extra-padding: max(
+    0px,
+    calc((100% - var(--vp-layout-max-width)) / 2)
+  );
   @media (min-width: 1280px) {
-    left: var(--vp-sidebar-width) !important;
-    right: var(--footer-aside-width) !important;
+    left: calc(
+      var(--vp-sidebar-width) + var(--footer-extra-padding)
+    ) !important;
     width: calc(
-      100% - var(--vp-sidebar-width) - var(--footer-aside-width)
+      100% - var(--footer-extra-padding) * 2 - var(--vp-sidebar-width) -
+        var(--footer-aside-width)
     ) !important;
   }
-}
-
-/* Temp footer fix: Limit sidebar width for correct 'left'
-Debug: '--vp-z-index-footer: 25' to raise footer above sidebar */
-:root {
-  --vp-layout-max-width: 100%;
 }
 
 /* ---------------- mobile: reduce hero image padding ---------------- */
