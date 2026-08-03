@@ -7,6 +7,7 @@ html.dark .only-light {
   display: none;
 }
 
+/* ---------------- Footer ---------------- */
 .VPFooter.has-sidebar {
   display: block !important;
   /* Below when the sidebar is visible */
@@ -30,4 +31,16 @@ html.dark .only-light {
 Debug: '--vp-z-index-footer: 25' to raise footer above sidebar */
 :root {
   --vp-layout-max-width: 100%;
+}
+
+/* ---------------- mobile: reduce hero image padding ---------------- */
+@media (max-width: 959px) {
+  .VPHero.has-image {
+    padding-top: calc(
+      calc((var(--vp-nav-height) + var(--vp-layout-top-height, 0px)) * 0.2)
+    ) !important; /* default calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 48px) */
+  }
+  .VPHero.has-image .image {
+    transform: translateY(16%) !important;
+  }
 }
